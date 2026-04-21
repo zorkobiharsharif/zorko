@@ -1,0 +1,2661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Zorko Bihar Sharif — Order Online | Burgers, Pizza, Mojitos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#E8291C;--red2:#ff3a2a;--dark:#0A0700;--dark2:#1a1000;
+  --amber:#F5A623;--amber2:#ffbb44;--cream:#FFFAF3;--border:#EDE0D4;
+  --muted:#8A7A6C;--green:#16a34a;--orange:#FF6B00;--card:#fff;
+  --overlay:rgba(10,7,0,0.7);--r:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+
+/* TICKER */
+.ticker{background:var(--dark);color:#fff;padding:10px 0;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2}
+.ticker::before{left:0;background:linear-gradient(to right,var(--dark),transparent)}
+.ticker::after{right:0;background:linear-gradient(to left,var(--dark),transparent)}
+.ticker-inner{display:flex;gap:0;white-space:nowrap;animation:scroll 30s linear infinite}
+.ticker-item{padding:0 2rem;font-size:12px;font-weight:600;letter-spacing:.3px;display:inline-flex;align-items:center;gap:8px}
+.ticker-item::after{content:'•';color:var(--amber);margin-left:2rem}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* FREE DELIVERY BAR */
+.free-del-bar{background:var(--green);color:#fff;text-align:center;padding:9px 1rem;font-size:13px;font-weight:800;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px}
+.free-del-bar .fdtag{background:rgba(255,255,255,.22);border-radius:20px;padding:2px 11px;font-size:11px;font-weight:900;letter-spacing:.8px;text-transform:uppercase}
+
+/* MIN ORDER ALERT BAR */
+.min-order-bar{background:linear-gradient(90deg,#fff3e0,#ffe0b2);border-bottom:2px solid var(--amber);color:#7a3a00;text-align:center;padding:8px 1rem;font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px}
+.min-order-bar span{background:var(--amber);color:var(--dark);border-radius:20px;padding:2px 10px;font-size:11px;font-weight:900}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,250,243,0.97);backdrop-filter:blur(14px);border-bottom:2px solid var(--border);padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:62px}
+.nav-logo{font-family:'Bebas Neue',cursive;font-size:2rem;color:var(--dark);text-decoration:none;display:flex;align-items:center;gap:8px;letter-spacing:1px}
+.nav-logo-img{width:36px;height:36px;border-radius:9px;object-fit:cover;display:none;flex-shrink:0}
+.nav-logo-img.show{display:block}
+.nav-logo .z-dot{width:9px;height:9px;background:var(--red);border-radius:50%;margin-bottom:6px;flex-shrink:0}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-call{background:var(--dark);color:#fff;border:none;padding:9px 16px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:5px;transition:background .2s}
+.nav-call:hover{background:#2a1800}
+.cart-btn{background:var(--red);color:#fff;border:none;padding:9px 16px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;position:relative}
+.cart-btn:hover{background:var(--red2);transform:scale(1.03)}
+.cart-count{background:#fff;color:var(--red);border-radius:50%;min-width:20px;height:20px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.cart-count.bump{animation:bump .25s ease}
+@keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+
+/* HERO */
+.hero{background:var(--dark);padding:0;overflow:hidden;position:relative}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 80% 10%,rgba(232,41,28,0.25) 0%,transparent 55%),radial-gradient(ellipse at 10% 80%,rgba(245,166,35,0.15) 0%,transparent 50%);pointer-events:none}
+.hero-img-bg{position:absolute;inset:0;overflow:hidden}
+.hero-img-bg img{width:100%;height:100%;object-fit:cover;opacity:.18}
+.pulse-dot{width:7px;height:7px;background:var(--amber2);border-radius:50%;animation:pulse 1.8s ease infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+.hero h1{font-family:'Bebas Neue',cursive;font-size:clamp(3.2rem,14vw,7rem);color:#fff;line-height:.9;letter-spacing:2px;margin-bottom:.6rem}
+.hero h1 .accent{color:var(--amber);display:block}
+.hero-sub{color:rgba(255,255,255,.55);font-size:.95rem;margin-bottom:2rem;max-width:340px;margin-left:auto;margin-right:auto;line-height:1.7;font-weight:500}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn-primary{background:var(--red);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;letter-spacing:.3px}
+.btn-primary:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,41,28,.4)}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.25);padding:14px 28px;border-radius:12px;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-outline:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.07)}
+.hero-stats{display:flex;justify-content:center;border-top:1px solid rgba(255,255,255,.08);padding-top:1.75rem}
+.stat{flex:1;max-width:110px;text-align:center;border-right:1px solid rgba(255,255,255,.08)}
+.stat:last-child{border-right:none}
+.stat .num{font-family:'Bebas Neue',cursive;font-size:2rem;color:var(--amber);letter-spacing:1px}
+.stat .lbl{font-size:10.5px;color:rgba(255,255,255,.45);margin-top:1px;font-weight:500}
+.hero-content{position:relative;z-index:1;padding:3rem 1.5rem 2.5rem;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,166,35,0.12);border:1.5px solid rgba(245,166,35,0.4);color:var(--amber2);font-size:11px;font-weight:700;padding:6px 14px;border-radius:30px;margin-bottom:1.5rem;letter-spacing:1px;text-transform:uppercase}
+
+/* AMBIENCE */
+.ambience-section{padding:2rem 1.25rem;max-width:980px;margin:0 auto}
+.ambience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.ambience-card{border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,#1a1000,#2a1800);position:relative;cursor:default}
+.ambience-card img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.ambience-card:hover img{transform:scale(1.05)}
+.ambience-card .amb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55),transparent);display:flex;align-items:flex-end;padding:14px}
+.amb-label{color:#fff;font-size:13px;font-weight:700}
+.amb-placeholder{background:rgba(10,7,0,.04);border:2px dashed rgba(245,166,35,.25);border-radius:16px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:border-color .2s}
+.amb-placeholder:hover{border-color:var(--amber)}
+.amb-ph-icon{font-size:2rem;opacity:.4}
+.amb-ph-txt{font-size:12px;font-weight:600;color:var(--muted);text-align:center;padding:0 1rem}
+
+/* OFFERS STRIP */
+.offers{background:linear-gradient(135deg,#0d0800,#1e0f00);padding:12px 1rem;overflow-x:auto;scrollbar-width:none}
+.offers::-webkit-scrollbar{display:none}
+.offers-row{display:flex;gap:10px;min-width:max-content}
+.offer-tag{background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.28);color:#fff;padding:8px 16px;border-radius:30px;font-size:12px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:6px;cursor:pointer}
+.offer-tag em{color:var(--amber);font-style:normal;font-weight:800}
+
+/* PAUSED BANNER */
+.paused-banner{display:none;background:linear-gradient(135deg,#FFF3E0,#FFE5C8);border:2px solid var(--orange);border-radius:14px;padding:15px 20px;margin:1rem 1.25rem;text-align:center;font-size:14px;font-weight:700;color:#7A3A00;max-width:980px;margin-left:auto;margin-right:auto}
+.paused-banner.show{display:block}
+
+/* SEARCH */
+.search-wrap-outer{background:var(--card);padding:12px 1.25rem;border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:95}
+.search-box{max-width:620px;margin:0 auto;position:relative}
+.search-input{width:100%;padding:11px 42px 11px 44px;border:2px solid var(--border);border-radius:14px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--dark);background:var(--cream);outline:none;transition:all .2s;font-weight:500}
+.search-input:focus{border-color:var(--red);background:#fff;box-shadow:0 0 0 4px rgba(232,41,28,.08)}
+.s-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.45;pointer-events:none}
+.s-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--muted);border:none;font-size:13px;cursor:pointer;color:#fff;display:none;width:20px;height:20px;border-radius:50%;align-items:center;justify-content:center;font-weight:700}
+.s-clear.visible{display:flex}
+
+/* CAT BAR */
+.cat-bar{background:var(--card);border-bottom:2px solid var(--border);position:sticky;top:122px;z-index:90;overflow-x:auto;white-space:nowrap;padding:0 .75rem;scrollbar-width:none}
+.cat-bar::-webkit-scrollbar{display:none}
+.cat-tabs{display:inline-flex;gap:4px;padding:8px 0;min-width:max-content}
+#customCatTabs{display:inline-flex;gap:4px;order:999}
+.cat-tab{background:none;border:none;padding:8px 15px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-radius:30px;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.cat-tab:hover{color:var(--dark);background:#f5ede4}
+.cat-tab.active{color:#fff;background:var(--red)}
+
+/* SECTIONS */
+.section{padding:2rem 1.25rem;max-width:980px;margin:0 auto}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:1.4rem;flex-wrap:wrap}
+.sec-icon{font-size:1.4rem;flex-shrink:0}
+.sec-title{font-family:'Bebas Neue',cursive;font-size:1.6rem;color:var(--dark);letter-spacing:.5px}
+.sec-pill{font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--red)}
+.sec-pill.gold{background:var(--amber);color:var(--dark)}
+.sec-pill.lime{background:var(--green)}
+
+/* COMBO CARDS */
+.combo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:14px}
+.combo-card{background:var(--card);border-radius:18px;padding:18px;border:2px solid #f0d47a;position:relative;overflow:hidden;transition:all .2s}
+.combo-card:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(0,0,0,.1)}
+.combo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--amber),var(--orange))}
+.combo-ribbon{position:absolute;top:12px;right:-1px;background:var(--amber);color:var(--dark);font-size:9px;font-weight:900;padding:5px 12px;border-radius:30px 0 0 30px;letter-spacing:.5px}
+.combo-emoji{font-size:2.2rem;margin-bottom:10px;width:88px;height:88px;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#fff7df,#fff)}
+.combo-emoji img{width:100%;height:100%;object-fit:cover;display:block}
+.combo-name{font-family:'Bebas Neue',cursive;font-size:1.1rem;color:var(--dark);margin-bottom:6px;padding-right:56px;line-height:1.2;letter-spacing:.5px}
+.combo-price{font-family:'Bebas Neue',cursive;font-size:2rem;color:var(--red);margin:8px 0;letter-spacing:1px}
+.combo-select{width:100%;padding:9px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:12.5px;background:var(--cream);margin-top:7px;color:var(--dark);outline:none;font-weight:600;appearance:none;cursor:pointer}
+.combo-select:focus{border-color:var(--amber)}
+.combo-add-btn{background:var(--dark);color:#fff;border:none;width:100%;padding:11px;border-radius:11px;font-family:'Outfit',sans-serif;font-size:13.5px;font-weight:800;cursor:pointer;margin-top:12px;transition:all .2s;letter-spacing:.3px}
+.combo-add-btn:hover{background:var(--red)}
+
+/* MOVERS */
+.movers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:14px}
+.mover-card{background:var(--card);border-radius:18px;display:flex;gap:14px;align-items:center;padding:15px;border:2px solid var(--border);transition:all .15s;cursor:pointer}
+.mover-card:hover{box-shadow:0 8px 28px rgba(0,0,0,.09);transform:translateY(-2px);border-color:#e8d0c0}
+.mover-img{font-size:2.8rem;flex-shrink:0;width:72px;height:72px;background:linear-gradient(135deg,#FFF3E5,#FFD9B5);border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.mover-img img{width:100%;height:100%;object-fit:cover;border-radius:14px}
+.mover-body{flex:1;min-width:0}
+.mover-name{font-weight:800;font-size:14px;color:var(--dark);margin-bottom:3px;line-height:1.3}
+.mover-desc{font-size:11.5px;color:var(--muted);margin-bottom:8px;font-weight:500}
+.mover-foot{display:flex;align-items:center;justify-content:space-between}
+.mover-price{font-family:'Bebas Neue',cursive;font-size:1.25rem;color:var(--red);letter-spacing:.5px}
+
+/* MENU CARDS */
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px;align-items:start}
+.menu-card{background:var(--card);border-radius:16px;overflow:hidden;border:2px solid var(--border);transition:all .15s;display:flex;flex-direction:column;cursor:pointer}
+.menu-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.09);border-color:#e0cfc0}
+.menu-img{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#FFF3E5,#FFD9B5);display:flex;align-items:center;justify-content:center;font-size:3rem;flex-shrink:0;overflow:hidden;position:relative}
+.menu-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.menu-img .menu-emoji-fb{font-size:3rem}
+.menu-body{padding:12px;flex:1;display:flex;flex-direction:column}
+.menu-name{font-weight:800;font-size:13.5px;color:var(--dark);margin-bottom:3px;line-height:1.3}
+.menu-desc{font-size:11.5px;color:var(--muted);margin-bottom:8px;line-height:1.5;flex:1;font-weight:500}
+.menu-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.menu-price{font-family:'Bebas Neue',cursive;font-size:1.2rem;color:var(--red);letter-spacing:.5px}
+.add-btn{background:var(--red);color:#fff;border:none;width:32px;height:32px;border-radius:9px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;font-weight:900}
+.add-btn:hover{background:var(--red2);transform:scale(1.1)}
+.qty-ctrl{display:flex;align-items:center;gap:6px}
+.qty-btn{background:var(--red);color:#fff;border:none;width:28px;height:28px;border-radius:7px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:900;transition:background .15s}
+.qty-btn:hover{background:var(--red2)}
+.qty-num{font-weight:900;font-size:14px;min-width:18px;text-align:center;color:var(--dark)}
+.badge-bs{background:var(--amber);color:var(--dark);font-size:9px;font-weight:900;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:5px;letter-spacing:.3px}
+.badge-spicy{background:var(--orange);color:#fff;font-size:9px;font-weight:900;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:5px;letter-spacing:.3px}
+
+/* ADDONS */
+.addon-box{background:var(--cream);border:1.5px dashed #d0bfb0;border-radius:10px;padding:10px 12px;margin-top:8px;width:100%;box-sizing:border-box}
+.addon-ttl{font-size:10px;font-weight:800;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px}
+.addon-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;gap:4px}
+.addon-label{font-size:12px;color:var(--dark);display:flex;align-items:center;gap:5px;cursor:pointer;font-weight:600;flex:1;min-width:0}
+.addon-p{font-size:12px;font-weight:800;color:var(--red);white-space:nowrap}
+.addon-cb{width:15px;height:15px;accent-color:var(--red);cursor:pointer;flex-shrink:0}
+
+/* UPI ONLY BOX */
+.pay-upi-box{background:linear-gradient(135deg,#f0fff4,#dcfce7);border:2px solid var(--green);border-radius:14px;padding:20px;text-align:center;margin-top:8px}
+.pay-upi-title{font-weight:900;font-size:16px;color:var(--green);margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:6px}
+.pay-upi-sub{font-size:13px;color:#166534;font-weight:600;line-height:1.6}
+.pay-upi-highlight{display:inline-block;background:var(--green);color:#fff;border-radius:8px;padding:4px 14px;font-size:12px;font-weight:900;margin-top:10px;letter-spacing:.5px}
+
+/* CART MIN NOTE */
+.cart-min-note{font-size:12px;color:var(--orange);font-weight:700;margin-bottom:10px;padding:8px 12px;background:#fff3e0;border-radius:10px;border:1.5px solid #ffb300;display:none;text-align:center}
+.cart-min-note.show{display:block}
+
+/* CART DRAWER */
+.cart-overlay{position:fixed;inset:0;background:var(--overlay);z-index:200;display:none;opacity:0;transition:opacity .28s}
+.cart-overlay.open{display:block;opacity:1}
+.cart-drawer{position:fixed;right:0;top:0;bottom:0;width:min(400px,100vw);background:var(--card);z-index:201;transform:translateX(100%);transition:transform .32s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column;box-shadow:-8px 0 50px rgba(0,0,0,.18)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-head{background:var(--dark);color:#fff;padding:1.3rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cart-head h2{font-family:'Bebas Neue',cursive;font-size:1.4rem;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.cart-close{background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.1rem;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.cart-close:hover{background:rgba(255,255,255,.2)}
+.cart-items{flex:1;overflow-y:auto;padding:1rem 1.5rem}
+.cart-empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.cart-empty-icon{font-size:3.5rem;display:block;margin-bottom:.75rem}
+.cart-empty p{font-size:14px;font-weight:600;color:var(--muted)}
+.cart-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-weight:800;font-size:13.5px;color:var(--dark)}
+.ci-sub{font-size:11px;color:var(--muted);margin-top:2px;font-weight:500}
+.ci-price{font-family:'Bebas Neue',cursive;font-size:1.1rem;color:var(--red);margin-top:2px}
+.ci-rm{background:none;border:none;color:#ccc;cursor:pointer;font-size:1.1rem;padding:3px;line-height:1;transition:color .15s;flex-shrink:0}
+.ci-rm:hover{color:var(--red)}
+.cart-foot{padding:1rem 1.5rem;border-top:2px solid var(--border);flex-shrink:0;background:var(--card)}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cart-total-lbl{font-size:14px;color:var(--muted);font-weight:600}
+.cart-total-amt{font-family:'Bebas Neue',cursive;font-size:2rem;color:var(--dark);letter-spacing:1px}
+.checkout-btn{background:var(--red);color:#fff;border:none;width:100%;padding:15px;border-radius:12px;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;letter-spacing:.3px}
+.checkout-btn:hover{background:var(--red2)}
+.checkout-btn:disabled{background:#bbb;cursor:not-allowed;transform:none}
+
+/* CHECKOUT MODAL */
+.modal-overlay{position:fixed;inset:0;background:var(--overlay);z-index:300;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+@media(min-width:600px){.modal-overlay{align-items:center;padding:1rem}}
+.modal{background:var(--card);border-radius:22px 22px 0 0;width:100%;max-height:92vh;overflow-y:auto}
+@media(min-width:600px){.modal{border-radius:22px;max-width:490px}}
+.modal-head{background:var(--dark);color:#fff;padding:1.5rem;border-radius:22px 22px 0 0;position:sticky;top:0;z-index:1}
+.modal-head h2{font-family:'Bebas Neue',cursive;font-size:1.4rem;letter-spacing:.5px}
+.modal-head p{font-size:12.5px;opacity:.55;margin-top:3px;font-weight:500}
+.modal-body{padding:1.5rem 1.5rem 2rem}
+.form-group{margin-bottom:15px}
+.form-label{display:block;font-weight:800;font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.7px}
+.form-input{width:100%;padding:13px 15px;border:2px solid var(--border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:14.5px;color:var(--dark);background:var(--cream);outline:none;transition:all .15s;font-weight:600}
+.form-input:focus{border-color:var(--red);background:#fff;box-shadow:0 0 0 4px rgba(232,41,28,.08)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.order-sum{background:var(--cream);border-radius:14px;padding:1rem;margin-bottom:1rem;border:2px solid var(--border)}
+.coupon-box{background:#fff;border:2px solid var(--border);border-radius:14px;padding:12px 12px;margin-bottom:12px}
+.coupon-row{display:flex;gap:8px;align-items:center}
+.coupon-btn{background:var(--dark);color:#fff;border:none;padding:12px 14px;border-radius:12px;font-family:'Outfit',sans-serif;font-weight:900;font-size:13px;cursor:pointer;white-space:nowrap}
+.coupon-btn:disabled{opacity:.55;cursor:not-allowed}
+.coupon-msg{font-size:12px;font-weight:700;margin-top:8px}
+.coupon-msg.ok{color:var(--green)}
+.coupon-msg.err{color:var(--red)}
+.coupon-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.coupon-link{background:none;border:none;color:var(--red);font-weight:900;font-size:12px;cursor:pointer;padding:0;font-family:'Outfit',sans-serif}
+.coupon-offers{margin-top:10px;display:grid;gap:10px}
+.coupon-offer{border:1.5px solid var(--border);border-radius:12px;padding:10px;display:flex;justify-content:space-between;gap:10px;align-items:center;background:#fffdf9}
+.coupon-offer.disabled{opacity:.55}
+.coupon-offer .co-left{min-width:0}
+.coupon-code{font-weight:900;font-size:13px;letter-spacing:.4px}
+.coupon-desc{font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;line-height:1.3}
+.coupon-save{font-size:11px;font-weight:900;color:var(--green);margin-top:4px}
+.coupon-apply-sm{background:var(--red);color:#fff;border:none;border-radius:10px;padding:8px 12px;font-weight:900;font-size:12px;cursor:pointer;white-space:nowrap;font-family:'Outfit',sans-serif}
+.coupon-apply-sm:disabled{opacity:.6;cursor:not-allowed}
+.sum-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:4px;font-weight:500}
+.sum-total{display:flex;justify-content:space-between;font-weight:900;font-size:16px;color:var(--dark);border-top:2px solid var(--border);padding-top:10px;margin-top:10px}
+.place-btn{background:var(--green);color:#fff;border:none;width:100%;padding:17px;border-radius:14px;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+.place-btn:hover:not(:disabled){background:#15803d;transform:translateY(-1px);box-shadow:0 6px 20px rgba(22,163,74,.3)}
+.place-btn:disabled{background:#bbb;cursor:not-allowed;transform:none}
+.min-order-warn{background:#fff3e0;border:2px solid var(--amber);border-radius:12px;padding:12px 15px;font-size:13px;color:#7a3a00;margin-bottom:12px;font-weight:700;display:none;text-align:center}
+.min-order-warn.show{display:block}
+.deliv-warn{background:#FFF3E0;border:1.5px solid #FFB300;border-radius:12px;padding:11px 15px;font-size:12.5px;color:#7A4900;margin:10px 0;display:none;font-weight:600}
+.deliv-warn.show{display:block}
+.success-screen{text-align:center;padding:3rem 1.5rem}
+.success-screen .si{font-size:4.5rem;display:block;margin-bottom:1rem}
+.success-screen h2{font-family:'Bebas Neue',cursive;font-size:2rem;color:var(--green);margin-bottom:.5rem;letter-spacing:.5px}
+.success-screen p{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:1.5rem;font-weight:500}
+.wa-btn{background:#25D366;color:#fff;border:none;padding:14px 30px;border-radius:14px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:all .2s}
+.wa-btn:hover{background:#1ebe59;transform:translateY(-2px)}
+.loc-detect-btn{background:var(--dark);color:#fff;border:none;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;margin-top:8px;font-family:'Outfit',sans-serif;transition:background .2s;width:100%;justify-content:center}
+.loc-detect-btn:hover{background:var(--red)}
+
+/* LOCATION SECTION */
+.location-section{background:var(--dark);padding:2.5rem 1.5rem;margin-top:2rem}
+.location-inner{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+@media(max-width:600px){.location-inner{grid-template-columns:1fr}}
+.location-title{font-family:'Bebas Neue',cursive;font-size:1.5rem;color:#fff;letter-spacing:.5px;margin-bottom:.75rem}
+.location-detail{color:rgba(255,255,255,.55);font-size:14px;font-weight:500;line-height:1.85}
+.location-detail strong{color:#fff;font-weight:700}
+.loc-map-btn{display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:var(--dark);border:none;padding:11px 22px;border-radius:11px;font-family:'Outfit',sans-serif;font-size:13.5px;font-weight:800;cursor:pointer;text-decoration:none;margin-top:14px;transition:all .2s}
+.loc-map-btn:hover{background:var(--amber2)}
+.hours-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px}
+.hours-title{font-family:'Bebas Neue',cursive;font-size:1.1rem;color:var(--amber);letter-spacing:.5px;margin-bottom:12px}
+.hours-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.hours-row:last-child{border-bottom:none}
+.hours-day{color:rgba(255,255,255,.5);font-weight:600}
+.hours-time{color:#fff;font-weight:800}
+
+/* ADMIN */
+.admin-link{text-align:center;padding:1.5rem;border-top:1px solid var(--border);margin-top:1rem}
+.admin-link a{font-size:12px;color:var(--muted);text-decoration:none;font-weight:600}
+.admin-link a:hover{color:var(--red)}
+.admin-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:none;align-items:center;justify-content:center;padding:1rem}
+.admin-overlay.open{display:flex}
+.admin-panel{background:var(--card);border-radius:22px;width:min(700px,100%);max-height:92vh;overflow-y:auto}
+.admin-head{background:var(--dark);color:#fff;padding:1.5rem;border-radius:22px 22px 0 0;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1}
+.admin-body{padding:1.5rem}
+.admin-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:1.5rem;gap:4px;flex-wrap:wrap}
+.admin-tab{background:none;border:none;padding:9px 14px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s}
+.admin-tab.active{color:var(--red);border-bottom-color:var(--red)}
+.order-card{background:var(--cream);border-radius:14px;padding:1rem;margin-bottom:12px;border-left:4px solid var(--amber);transition:all .2s}
+.order-card.new{border-left-color:var(--red)}
+.order-card.confirmed{border-left-color:var(--amber)}
+.order-card.preparing{border-left-color:var(--orange)}
+.order-card.delivered{border-left-color:var(--green)}
+.order-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.oab{padding:7px 13px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;border:none;font-family:'Outfit',sans-serif;transition:opacity .15s}
+.oab:hover{opacity:.85}
+.oab.confirm{background:var(--green);color:#fff}
+.oab.prep{background:var(--orange);color:#fff}
+.oab.deliv{background:#1565C0;color:#fff}
+.oab.done{background:#555;color:#fff}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.toggle-lbl{font-size:14px;font-weight:700;color:var(--dark)}
+.tswitch{position:relative;width:46px;height:25px;cursor:pointer;flex-shrink:0}
+.tswitch input{opacity:0;width:0;height:0;position:absolute}
+.tslider{position:absolute;inset:0;background:#d0ccc8;border-radius:24px;transition:background .2s}
+.tslider::before{content:'';position:absolute;height:19px;width:19px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 2px 4px rgba(0,0,0,.15)}
+.tswitch input:checked + .tslider{background:var(--red)}
+.tswitch input:checked + .tslider::before{transform:translateX(21px)}
+.adm-item{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);gap:10px}
+.adm-name{font-size:13px;font-weight:700;color:var(--dark);flex:1}
+.price-input{border:2px solid var(--border);border-radius:9px;padding:6px 10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;color:var(--red);width:78px;text-align:center;outline:none;background:none}
+.price-input:focus{border-color:var(--red)}
+.save-btn{background:var(--green);color:#fff;border:none;padding:7px 14px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif}
+/* Admin image uploader for dishes */
+.dish-img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}
+.dish-img-item{text-align:center;cursor:pointer}
+.dish-img-thumb{width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#FFF3E5,#FFD9B5);display:flex;align-items:center;justify-content:center;margin-bottom:4px;position:relative;border:2px solid var(--border);transition:border-color .2s;font-size:1.8rem}
+.dish-img-thumb:hover{border-color:var(--red)}
+.dish-img-thumb img{width:100%;height:100%;object-fit:cover}
+.dish-img-name{font-size:10px;font-weight:700;color:var(--dark);line-height:1.2}
+.dish-upload-btn{background:var(--red);color:#fff;border:none;padding:5px 10px;border-radius:7px;font-size:11px;font-weight:800;cursor:pointer;margin-top:4px;font-family:'Outfit',sans-serif;width:100%}
+.img-upload-full{border:2px dashed var(--border);border-radius:12px;padding:18px;text-align:center;cursor:pointer;transition:border-color .2s;display:block;width:100%;background:none}
+.img-upload-full:hover{border-color:var(--red)}
+.img-upload-full .iuf-icon{font-size:1.8rem;display:block;margin-bottom:6px;opacity:.4}
+.img-upload-full .iuf-txt{font-size:13px;font-weight:800;color:var(--dark)}
+.img-upload-full .iuf-sub{font-size:11px;color:var(--muted);font-weight:500;margin-top:3px}
+/* Admin movers edit */
+.mover-edit-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:8px;flex-wrap:wrap}
+.mover-edit-name{font-size:13px;font-weight:700;flex:1}
+.mover-edit-check{accent-color:var(--red);width:18px;height:18px;cursor:pointer}
+/* Admin ambience */
+.amb-edit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:12px}
+.amb-edit-card{text-align:center}
+.amb-edit-thumb{width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#1a1000,#2a1800);display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative;border:2px solid var(--border)}
+.amb-edit-thumb img{width:100%;height:100%;object-fit:cover}
+.amb-edit-btn{background:var(--dark);color:#fff;border:none;padding:5px 10px;border-radius:7px;font-size:11px;font-weight:800;cursor:pointer;margin-top:5px;font-family:'Outfit',sans-serif;width:100%}
+
+/* STICKY BAR */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:150;padding:10px 1.25rem 14px;background:var(--red);display:none;align-items:center;justify-content:space-between;box-shadow:0 -6px 24px rgba(232,41,28,.35)}
+.sticky-bar.show{display:flex}
+.sb-info{color:#fff}
+.sb-count{font-size:12px;opacity:.8;font-weight:600}
+.sb-total{font-family:'Bebas Neue',cursive;font-size:1.25rem;color:#fff;letter-spacing:.5px}
+.sb-btn{background:#fff;color:var(--red);border:none;padding:10px 20px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all .2s}
+.sb-btn:hover{background:#fff5f5}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--dark);color:#fff;padding:11px 22px;border-radius:30px;font-size:13.5px;font-weight:700;z-index:600;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;max-width:90vw}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* SEARCH RESULTS */
+.search-results{padding:1.5rem 1.25rem;max-width:980px;margin:0 auto;display:none}
+.search-results.show{display:block}
+.no-res{text-align:center;padding:3rem;color:var(--muted)}
+.no-res-icon{font-size:3rem;display:block;margin-bottom:1rem}
+
+/* FOOTER */
+footer{background:var(--dark);color:#fff;padding:3rem 1.5rem 2rem;margin-top:2rem}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;max-width:980px;margin:0 auto 2rem}
+.footer-logo{font-family:'Bebas Neue',cursive;font-size:2.5rem;color:var(--amber);letter-spacing:2px;display:flex;align-items:center;gap:10px}
+.footer-logo img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+.footer-tagline{color:rgba(255,255,255,.45);font-size:13.5px;margin-top:8px;line-height:1.65;font-weight:500}
+.footer-title{font-weight:900;font-size:13px;color:var(--amber);margin-bottom:12px;letter-spacing:.5px;text-transform:uppercase}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:9px}
+.footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:13.5px;transition:color .15s;font-weight:500;display:flex;align-items:center;gap:6px}
+.footer-links a:hover{color:#fff}
+.socials{display:flex;gap:10px;margin-top:16px}
+.social{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .15s;border:1px solid rgba(255,255,255,.08);overflow:hidden}
+.social:hover{background:var(--amber);border-color:var(--amber)}
+.social img{width:20px;height:20px;object-fit:contain}
+.social svg{width:20px;height:20px}
+.footer-bottom{text-align:center;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07);color:rgba(255,255,255,.3);font-size:12.5px;max-width:980px;margin:0 auto;font-weight:500}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .menu-grid{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .movers-grid{grid-template-columns:1fr}
+  .combo-grid{grid-template-columns:1fr}
+}
+@media(max-width:380px){.menu-grid{grid-template-columns:1fr}}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.section{animation:fadeUp .4s ease both}
+.combo-card,.mover-card,.menu-card{will-change:transform;box-shadow:0 12px 28px rgba(10,7,0,.08);border:1px solid rgba(10,7,0,.06)}
+.combo-card:hover,.mover-card:hover,.menu-card:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(10,7,0,.12)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">🔥 Free delivery — Bihar Sharif</span>
+    <span class="ticker-item">📞 Call 9102525816 to order</span>
+    <span class="ticker-item">⚡ Avg delivery: 30 minutes</span>
+    <span class="ticker-item">🥤 14 Mojito flavours available daily</span>
+    <span class="ticker-item">🍔 Made fresh to order — no pre-cooked food</span>
+    <span class="ticker-item">⭐ Rated 4.8★ by customers in Bihar Sharif</span>
+    <span class="ticker-item">🛵 Minimum order ₹299 for delivery</span>
+    <span class="ticker-item">🔥 Free delivery — Bihar Sharif</span>
+    <span class="ticker-item">📞 Call 9102525816 to order</span>
+    <span class="ticker-item">⚡ Avg delivery: 30 minutes</span>
+    <span class="ticker-item">🥤 14 Mojito flavours available daily</span>
+    <span class="ticker-item">🍔 Made fresh to order — no pre-cooked food</span>
+    <span class="ticker-item">⭐ Rated 4.8★ by customers in Bihar Sharif</span>
+    <span class="ticker-item">🛵 Minimum order ₹299 for delivery</span>
+  </div>
+</div>
+
+<!-- FREE DELIVERY BAR -->
+<div class="free-del-bar">
+  🛵 <span class="fdtag">FREE DELIVERY</span> &nbsp;·&nbsp; <span class="fdtag">MIN ORDER ₹299</span> &nbsp;·&nbsp; UPI Payment Only 📱
+</div>
+
+<!-- MIN ORDER BAR -->
+<div class="min-order-bar">
+  ⚠️ Minimum order value: <span>₹299</span> to place delivery order
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" id="navLogo">
+    <img class="nav-logo-img" id="navLogoImg" src="" alt="Zorko" style="display:none">
+    <span id="navLogoText">ZORKO</span><span class="z-dot"></span>
+  </a>
+  <div class="nav-right">
+    <a href="tel:9102525816" class="nav-call">📞 Call</a>
+    <button class="cart-btn" onclick="openCart()">🛒 Cart <span class="cart-count" id="cartCount">0</span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-img-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="pulse-dot"></span> Now Delivering · Bihar Sharif</div>
+    <h1>ZORKO<br><span class="accent">BIHAR SHARIF</span></h1>
+    <p class="hero-sub">Bihar Sharif's most-loved café. Burgers, pizza, mojitos & more — fresh, fast, and seriously delicious.</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">🍔 Order Now</a>
+      <a href="tel:9102525816" class="btn-outline">📞 Call to Order</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="num">500+</div><div class="lbl">Daily Orders</div></div>
+      <div class="stat"><div class="num">4.8★</div><div class="lbl">Rating</div></div>
+      <div class="stat"><div class="num">30 min</div><div class="lbl">Delivery</div></div>
+      <div class="stat"><div class="num">50+</div><div class="lbl">Menu Items</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- AMBIENCE SECTION -->
+<div class="ambience-section" id="ambienceSection">
+  <div class="sec-head"><span class="sec-icon">📸</span><span class="sec-title">Zorko Bihar Sharif</span><span class="sec-pill gold">OUR VIBE</span></div>
+  <div class="ambience-grid" id="ambienceGrid"></div>
+</div>
+
+<!-- OFFERS STRIP -->
+<div class="offers">
+  <div class="offers-row">
+    <div class="offer-tag" onclick="document.getElementById('combos').scrollIntoView({behavior:'smooth'})"><em>COMBO:</em> OG Burger + Mojito ₹89</div>
+    <div class="offer-tag" onclick="document.getElementById('combos').scrollIntoView({behavior:'smooth'})"><em>DEAL:</em> Any Pizza + Mojito ₹209</div>
+    <div class="offer-tag" onclick="document.getElementById('combos').scrollIntoView({behavior:'smooth'})"><em>COFFEE:</em> 2 Premium Coffees ₹99</div>
+    <div class="offer-tag" onclick="document.getElementById('combos').scrollIntoView({behavior:'smooth'})"><em>MOJITO:</em> Any 3 Mojitos ₹109</div>
+    <div class="offer-tag" onclick="document.getElementById('pizza').scrollIntoView({behavior:'smooth'})"><em>PIZZA:</em> Margherita + Mojito ₹129</div>
+  </div>
+</div>
+
+<!-- ORDERS PAUSED -->
+<div class="paused-banner" id="pausedBanner">🚫 Orders are currently paused. Please try again later or <a href="tel:9102525816" style="color:var(--orange);font-weight:800">call us directly</a>.</div>
+
+<!-- SEARCH -->
+<div class="search-wrap-outer">
+  <div class="search-box">
+    <span class="s-icon">🔍</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="Search burgers, pizza, mojito…" oninput="handleSearch(this.value)" autocomplete="off">
+    <button class="s-clear" id="sClear" onclick="clearSearch()">✕</button>
+  </div>
+</div>
+
+<!-- CAT BAR -->
+<div class="cat-bar" id="menu">
+  <div class="cat-tabs">
+    <button class="cat-tab active" onclick="scrollTo2('combos',this)">⭐ Combos</button>
+    <button class="cat-tab" onclick="scrollTo2('movers',this)">🔥 Top Picks</button>
+    <button class="cat-tab" onclick="scrollTo2('burgers',this)">🍔 Burgers</button>
+    <button class="cat-tab" onclick="scrollTo2('pizza',this)">🍕 Pizza</button>
+    <button class="cat-tab" onclick="scrollTo2('wraps',this)">🌯 Wraps</button>
+    <button class="cat-tab" onclick="scrollTo2('fries',this)">🍟 Fries</button>
+    <button class="cat-tab" onclick="scrollTo2('sandwich',this)">🥪 Sandwich</button>
+    <button class="cat-tab" onclick="scrollTo2('maggi',this)">🍜 Maggi</button>
+    <button class="cat-tab" onclick="scrollTo2('nachos',this)">🌮 Nachos</button>
+    <button class="cat-tab" onclick="scrollTo2('dessert',this)">🍫 Dessert</button>
+    <button class="cat-tab" onclick="scrollTo2('beverages',this)">🥤 Drinks</button>
+    <span id="customCatTabs"></span>
+  </div>
+</div>
+
+<!-- SEARCH RESULTS -->
+<div class="search-results" id="srResults">
+  <div class="sec-head"><span class="sec-icon">🔍</span><span class="sec-title" id="srTitle">Results</span></div>
+  <div class="menu-grid" id="srGrid"></div>
+</div>
+
+<!-- ALL SECTIONS -->
+<div id="allSections">
+
+<div class="section" id="combos">
+  <div class="sec-head"><span class="sec-icon">⭐</span><span class="sec-title">Combos & Deals</span><span class="sec-pill gold">SAVE MORE</span></div>
+  <div class="combo-grid" id="combosGrid"></div>
+</div>
+
+<div class="section" id="movers">
+  <div class="sec-head"><span class="sec-icon">🔥</span><span class="sec-title">Today's Big Movers</span><span class="sec-pill lime">TRENDING</span></div>
+  <div class="movers-grid" id="moversGrid"></div>
+</div>
+
+<div class="section" id="burgers">
+  <div class="sec-head"><span class="sec-icon">🍔</span><span class="sec-title">Burgers</span><span class="sec-pill">BESTSELLERS</span></div>
+  <div class="menu-grid" id="burgersGrid"></div>
+</div>
+
+<div class="section" id="pizza">
+  <div class="sec-head"><span class="sec-icon">🍕</span><span class="sec-title">Pizza</span></div>
+  <div class="menu-grid" id="pizzaGrid"></div>
+</div>
+
+<div class="section" id="wraps">
+  <div class="sec-head"><span class="sec-icon">🌯</span><span class="sec-title">Wraps</span></div>
+  <div class="menu-grid" id="wrapsGrid"></div>
+</div>
+
+<div class="section" id="fries">
+  <div class="sec-head"><span class="sec-icon">🍟</span><span class="sec-title">Fries</span></div>
+  <div class="menu-grid" id="friesGrid"></div>
+</div>
+
+<div class="section" id="sandwich">
+  <div class="sec-head"><span class="sec-icon">🥪</span><span class="sec-title">Sandwich</span></div>
+  <div class="menu-grid" id="sandwichGrid"></div>
+</div>
+
+<div class="section" id="maggi">
+  <div class="sec-head"><span class="sec-icon">🍜</span><span class="sec-title">Maggi</span></div>
+  <div class="menu-grid" id="maggiGrid"></div>
+</div>
+
+<div class="section" id="nachos">
+  <div class="sec-head"><span class="sec-icon">🌮</span><span class="sec-title">Nachos</span></div>
+  <div class="menu-grid" id="nachosGrid"></div>
+</div>
+
+<div class="section" id="dessert">
+  <div class="sec-head"><span class="sec-icon">🍫</span><span class="sec-title">Desserts</span></div>
+  <div class="menu-grid" id="dessertGrid"></div>
+</div>
+
+<div class="section" id="beverages">
+  <div class="sec-head"><span class="sec-icon">🥤</span><span class="sec-title">Beverages & Mojitos</span><span class="sec-pill gold">14 FLAVOURS</span></div>
+  <div class="menu-grid" id="beveragesGrid"></div>
+</div>
+<div id="customSections"></div>
+</div>
+
+<!-- LOCATION SECTION -->
+<div class="location-section">
+  <div class="location-inner">
+    <div>
+      <div class="location-title">📍 Find Us</div>
+      <p class="location-detail">
+        <strong>Zorko Bihar Sharif</strong><br>
+        Opp. SBI Bank Main Branch<br>
+        Naisarai, Bihar Sharif — 803101<br><br>
+        <strong>📞</strong> <a href="tel:9102525816" style="color:var(--amber);font-weight:800;text-decoration:none">9102525816</a><br>
+        <strong>⏰</strong> 12 PM – 9 PM · Daily
+      </p>
+      <a href="https://maps.app.goo.gl/27DxRxm6zb2FLP6x9" target="_blank" class="loc-map-btn">🗺 Open in Google Maps</a>
+    </div>
+    <div class="hours-box">
+      <div class="hours-title">⏰ Timings</div>
+      <div class="hours-row"><span class="hours-day">Mon – Fri</span><span class="hours-time">12:00 PM – 9:00 PM</span></div>
+      <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">12:00 PM – 9:00 PM</span></div>
+      <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">12:00 PM – 9:00 PM</span></div>
+      <div class="hours-row"><span class="hours-day">Delivery</span><span class="hours-time">FREE Delivery · Bihar Sharif</span></div>
+      <div class="hours-row"><span class="hours-day">Min Order</span><span class="hours-time" style="color:var(--amber)">₹299</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="admin-link"><a href="#" onclick="openAdmin(event)">⚙️ Owner Admin Panel</a></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo" id="footerLogoWrap">
+        <img id="footerLogoImg" src="" alt="Zorko" style="display:none">
+        <span id="footerLogoText">ZORKO</span>
+      </div>
+      <p class="footer-tagline">Zorko Bihar Sharif — most-loved café. Fresh food, bold flavours, fast delivery to your door.</p>
+      <div class="socials">
+        <!-- Instagram Official Logo -->
+        <a href="https://www.instagram.com/zorko.biharsharif/" target="_blank" class="social" title="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <defs><radialGradient id="ig1" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fd5"/><stop offset="10%" stop-color="#fd5"/><stop offset="50%" stop-color="#ff543e"/><stop offset="100%" stop-color="#c837ab"/></radialGradient><radialGradient id="ig2" cx="14%" cy="6%" r="90%"><stop offset="0%" stop-color="#3771c8"/><stop offset="5%" stop-color="#3771c8"/><stop offset="100%" stop-color="#3771c8" stop-opacity="0"/></radialGradient></defs>
+            <rect width="24" height="24" rx="5" fill="url(#ig1)"/>
+            <rect width="24" height="24" rx="5" fill="url(#ig2)"/>
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="white"/>
+          </svg>
+        </a>
+        <!-- Facebook Official Logo -->
+        <a href="https://www.facebook.com/profile.php?id=61583576843158" target="_blank" class="social" title="Facebook" style="background:#1877f2;border-color:#1877f2">
+          <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+        <!-- Google Maps -->
+        <a href="https://maps.app.goo.gl/27DxRxm6zb2FLP6x9" target="_blank" class="social" title="Location" style="background:#fff;border-color:#ddd">
+          <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#EA4335"/>
+          </svg>
+        </a>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/919102525816" target="_blank" class="social" title="WhatsApp" style="background:#25D366;border-color:#25D366">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-title">Menu</div>
+      <ul class="footer-links">
+        <li><a href="#combos">⭐ Combos & Deals</a></li>
+        <li><a href="#burgers">🍔 Burgers</a></li>
+        <li><a href="#pizza">🍕 Pizza</a></li>
+        <li><a href="#wraps">🌯 Wraps</a></li>
+        <li><a href="#sandwich">🥪 Sandwich</a></li>
+        <li><a href="#beverages">🥤 Beverages</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:9102525816">📞 9102525816</a></li>
+        <li><a href="https://maps.app.goo.gl/27DxRxm6zb2FLP6x9" target="_blank">📍 Opp. SBI Bank Main Branch, Naisarai, Bihar Sharif 803101</a></li>
+        <li><a href="#">⏰ 12 PM – 9 PM Daily</a></li>
+        <li><a href="https://wa.me/919102525816" target="_blank">💬 WhatsApp Order</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Zorko Bihar Sharif. Made with ❤️ in Bihar.</div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h2>🛒 Your Cart</h2>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><span class="cart-empty-icon">🛒</span><p>Cart is empty!<br>Add some yummy items.</p></div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+<div class="cart-min-note" id="cartMinNote">⚠️ Add ₹<span id="cartMinNeeded">0</span> more to reach minimum order of ₹299</div>
+    <div class="cart-total-row">
+      <span class="cart-total-lbl">Total Amount</span>
+      <span class="cart-total-amt" id="cartTotal">₹0</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Complete Your Order</h2>
+      <p>Zorko Bihar Sharif — We'll deliver fresh to your door 🚀</p>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" id="custName" placeholder="Full name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" id="custPhone" placeholder="10-digit number" autocomplete="tel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Delivery Address</label>
+        <textarea class="form-input" id="custAddr" rows="2" placeholder="House no., street, locality…" autocomplete="street-address"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes for Restaurant (Optional)</label>
+        <textarea class="form-input" id="custNote" rows="2" placeholder="e.g. less spicy, no onions, extra sauce…"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📍 Google Maps Location (Auto-detect or paste link)</label>
+        <button class="loc-detect-btn" onclick="detectLocation()" id="locBtn">📍 Detect My Location Automatically</button>
+        <input type="url" class="form-input" id="custMaps" placeholder="Or paste Google Maps link here" style="margin-top:8px">
+        <div id="locStatus" style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600"></div>
+      </div>
+      <div class="deliv-warn" id="delivWarn" style="display:none!important"></div>
+
+      <!-- UPI Only Payment -->
+      <div class="form-group">
+        <label class="form-label">Payment Method</label>
+        <div class="pay-upi-box">
+          <div class="pay-upi-title">📱 UPI Payment Only</div>
+          <div class="pay-upi-sub">We accept all UPI apps — GPay, PhonePe, Paytm, BHIM & more.<br>Pay securely on delivery confirmation.</div>
+          <div class="pay-upi-highlight">✓ UPI SELECTED</div>
+        </div>
+      </div>
+
+<div class="min-order-warn" id="minOrderWarn">⚠️ Minimum order amount is ₹299. Please add more items.</div>
+<div class="order-sum" id="orderSum"></div>
+      <div class="coupon-box">
+        <label class="form-label">Promo Code</label>
+        <div class="coupon-row">
+          <input type="text" class="form-input" id="couponInput" placeholder="Enter code (e.g. WELCOME50)" style="text-transform:uppercase">
+          <button class="coupon-btn" id="couponApplyBtn" onclick="applyCoupon()">Apply</button>
+          <button class="coupon-btn" id="couponClearBtn" onclick="clearCoupon()" style="background:#6b7280;display:none">Remove</button>
+        </div>
+        <div class="coupon-msg" id="couponMsg" style="display:none"></div>
+        <div class="coupon-actions">
+          <span style="font-size:11px;color:var(--muted);font-weight:700">Have an offer code?</span>
+          <button class="coupon-link" type="button" onclick="toggleCouponOffers()">View offers</button>
+        </div>
+        <div class="coupon-offers" id="couponOffers" style="display:none"></div>
+      </div>
+      <button class="place-btn" id="placeBtn" onclick="placeOrder()">💬 Place Order via WhatsApp</button>
+      <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:10px;font-weight:600">Or <a href="tel:9102525816" style="color:var(--red);font-weight:800">call 9102525816</a> to order</p>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <div class="admin-head">
+      <span style="font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px">⚙️ ZORKO OWNER PANEL</span>
+      <button onclick="closeAdmin()" style="background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.1rem;cursor:pointer;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+    <div class="admin-body" id="adminBody">
+      <div id="adminLogin">
+        <h3 style="margin-bottom:1rem;font-family:'Bebas Neue',cursive;font-size:1.5rem;letter-spacing:.5px">Owner Login</h3>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="adminPass" placeholder="Enter owner password" onkeypress="if(event.key==='Enter')doAdminLogin()">
+        </div>
+        <button class="checkout-btn" onclick="doAdminLogin()">Login →</button>
+      </div>
+      <div id="adminDash" style="display:none">
+<div class="admin-tabs">
+<button class="admin-tab active" onclick="aTab('orders',this)">📋 Orders</button>
+<button class="admin-tab" onclick="aTab('menu',this)">🍔 Menu</button>
+<button class="admin-tab" onclick="aTab('prices',this)">💰 Prices</button>
+<button class="admin-tab" onclick="aTab('coupons',this)">🏷 Coupons</button>
+<button class="admin-tab" onclick="aTab('movers',this)">🔥 Top Picks</button>
+<button class="admin-tab" onclick="aTab('images',this)">🖼 Images</button>
+<button class="admin-tab" onclick="aTab('settings',this)">⚙️ Settings</button>
+</div>
+        <div id="aOrders"></div>
+        <div id="aMenu" style="display:none"></div>
+        <div id="aPrices" style="display:none"></div>
+        <div id="aCoupons" style="display:none"></div>
+        <div id="aMovers" style="display:none"></div>
+        <div id="aImages" style="display:none"></div>
+        <div id="aSettings" style="display:none">
+          <div class="toggle-row">
+            <span class="toggle-lbl">Accept Orders</span>
+            <label class="tswitch"><input type="checkbox" id="ordersToggle" checked onchange="aTgl('orders',this)"><span class="tslider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-lbl">Show Combos Section</span>
+            <label class="tswitch"><input type="checkbox" id="tCombos" checked onchange="aTgl('combos',this)"><span class="tslider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-lbl">Online Delivery</span>
+            <label class="tswitch"><input type="checkbox" id="tDelivery" checked onchange="aTgl('delivery',this)"><span class="tslider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-lbl">Show Today's Deals Strip</span>
+            <label class="tswitch"><input type="checkbox" id="tDeals" checked onchange="aTgl('deals',this)"><span class="tslider"></span></label>
+          </div>
+          <div style="margin-top:1.5rem;padding:16px;background:var(--cream);border-radius:14px;text-align:center;border:2px solid var(--border)">
+            <p style="font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:600">WhatsApp orders sent to:</p>
+            <p style="font-weight:900;font-size:1rem">📱 +91 9102525816</p>
+            <p style="font-size:12px;color:var(--muted);margin-top:4px;font-weight:600">Minimum Order: ₹299</p>
+          </div>
+
+          <div style="margin-top:1rem">
+            <p style="font-size:13px;font-weight:800;margin-bottom:8px;color:var(--dark)">🏷 Upload Zorko Logo</p>
+            <label class="img-upload-full" onclick="document.getElementById('logoFileInput').click()">
+              <span class="iuf-icon">🏷</span>
+              <span class="iuf-txt">Upload Logo Image</span>
+              <span class="iuf-sub">Appears in navbar & footer · PNG/JPG recommended</span>
+            </label>
+            <input type="file" id="logoFileInput" accept="image/*" style="display:none" onchange="uploadLogo(this)">
+          </div>
+
+          <!-- Hero BG Upload -->
+          <div style="margin-top:1rem">
+            <p style="font-size:13px;font-weight:800;margin-bottom:8px;color:var(--dark)">🌆 Upload Hero Background</p>
+            <label class="img-upload-full" onclick="document.getElementById('heroBgInput').click()">
+              <span class="iuf-icon">🌆</span>
+              <span class="iuf-txt">Upload Hero Background</span>
+              <span class="iuf-sub">Full-width café photo · shows behind hero text</span>
+            </label>
+            <input type="file" id="heroBgInput" accept="image/*" style="display:none" onchange="uploadHeroBg(this)">
+          </div>
+          <!-- Cloud Sync -->
+          <div id="cloudSetupBox"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY CART BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="sb-info">
+    <div class="sb-count" id="sbCount"></div>
+    <div class="sb-total" id="sbTotal"></div>
+  </div>
+  <button class="sb-btn" onclick="openCart()">View Cart →</button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const SUPABASE_URL = "https://qgyyzthuaoinvzeztuce.supabase.co";
+const SUPABASE_KEY = "sb_publishable_bPdbPfI4zJIn4yJU3C2g7A_U68NuQYi";
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// LOAD DATA
+async function loadFromCloud() {
+  const { data, error } = await sb
+    .from('app_state')
+    .select('*')
+    .eq('id', 1)
+    .single();
+
+  if (error) {
+    console.error("LOAD ERROR:", error);
+    return null;
+  }
+
+  return data.data;
+}
+
+// SAVE DATA
+async function saveToCloud(newData) {
+  const { error } = await sb
+    .from('app_state')
+    .update({ data: newData })
+    .eq('id', 1);
+
+  if (error){ console.error("SAVE ERROR:", error); return false; }
+  return true;
+}
+// =================== CONFIG ===================
+const MIN_ORDER = 299;
+const ADMIN_PASS = 'zorko2025';
+const WA_NUMBER = '919102525816';
+const ZORKO_MAPS = 'https://maps.app.goo.gl/27DxRxm6zb2FLP6x9';
+
+// =================== COUPONS ===================
+const DELIVERY_FEE = 0;
+let appliedCouponCode = '';
+let appliedCoupon = null;
+let appliedDiscount = 0;
+
+function getDefaultCoupons(){
+  return [
+    { code:'WELCOME50', active:true, type:'flat', value:50, minSubtotal:299, onePerCustomer:true, firstOrderOnly:false, maxTotalUses:null, expiry:null },
+    { code:'ZORKO10', active:true, type:'percent', value:10, minSubtotal:199, onePerCustomer:true, firstOrderOnly:false, maxTotalUses:null, expiry:null },
+    { code:'FREEDEL', active:true, type:'free_delivery', value:0, minSubtotal:249, onePerCustomer:true, firstOrderOnly:false, maxTotalUses:null, expiry:null },
+    { code:'COMBO20', active:true, type:'percent_combos', value:20, minSubtotal:0, onePerCustomer:true, firstOrderOnly:false, maxTotalUses:null, expiry:null },
+    // Example free item coupon (set freeItemId to bv1 for free mojito)
+    { code:'FREEMOJITO', active:false, type:'free_item', value:0, minSubtotal:299, freeItemId:'bv1', onePerCustomer:true, firstOrderOnly:false, maxTotalUses:null, expiry:null }
+  ];
+}
+
+function normCode(code){
+  return String(code||'').trim().toUpperCase();
+}
+
+function cartSubtotal(){
+  return cart.reduce((s,i)=>s+(i.price*i.qty),0);
+}
+
+function cartComboSubtotal(){
+  return cart.reduce((s,i)=>{
+    const isCombo=!!i.isCombo || String(i.id||'').startsWith('combo_') || String(i.id||'').startsWith('combo');
+    return s+(isCombo?(i.price*i.qty):0);
+  },0);
+}
+
+function setCouponMsg(msg,type){
+  const el=document.getElementById('couponMsg');
+  if(!el) return;
+  el.style.display=msg?'block':'none';
+  el.textContent=msg||'';
+  el.classList.remove('ok','err');
+  if(type) el.classList.add(type);
+}
+
+function clearCoupon(){
+  // Remove any freebie item added by coupon
+  try{
+    cart=cart.filter(i=>!(i && i.freebie));
+    updateCartUI();
+  }catch(e){}
+  appliedCouponCode='';
+  appliedCoupon=null;
+  appliedDiscount=0;
+  const inp=document.getElementById('couponInput'); if(inp) inp.value='';
+  const clr=document.getElementById('couponClearBtn'); if(clr) clr.style.display='none';
+  setCouponMsg('',null);
+  renderOrderSum();
+}
+
+function customerKey(phone){
+  return String(phone||'').trim();
+}
+
+function isExpired(c){
+  if(!c||!c.expiry) return false;
+  const t=Date.parse(c.expiry);
+  if(Number.isNaN(t)) return false;
+  return Date.now()>t;
+}
+
+function couponDiscountForCart(coupon){
+  if(!coupon) return 0;
+  const subtotal=cartSubtotal();
+  const comboSubtotal=cartComboSubtotal();
+  if(subtotal<=0) return 0;
+  if(subtotal < (coupon.minSubtotal||0)) return 0;
+
+  if(coupon.type==='free_item'){
+    // Free item coupon adds a zero-priced item; no amount discount.
+    return 0;
+  }
+  if(coupon.type==='flat'){
+    return Math.max(0,Math.min(subtotal,Math.round(coupon.value||0)));
+  }
+  if(coupon.type==='percent'){
+    const pct=Math.max(0,Math.min(100,Number(coupon.value||0)));
+    return Math.max(0,Math.min(subtotal,Math.round(subtotal*pct/100)));
+  }
+  if(coupon.type==='percent_combos'){
+    if(comboSubtotal<=0) return 0;
+    const pct=Math.max(0,Math.min(100,Number(coupon.value||0)));
+    return Math.max(0,Math.min(subtotal,Math.round(comboSubtotal*pct/100)));
+  }
+  if(coupon.type==='free_delivery'){
+    return Math.max(0,Math.min(subtotal,DELIVERY_FEE));
+  }
+  return 0;
+}
+
+async function ensureCouponsInState(state){
+  if(!state || typeof state!=='object') return state;
+  if(!Array.isArray(state.coupons) || state.coupons.length===0){
+    state.coupons=getDefaultCoupons();
+    state.couponUsage=state.couponUsage&&typeof state.couponUsage==='object'?state.couponUsage:{};
+    await cloudSave(state);
+  }
+  if(!state.couponUsage || typeof state.couponUsage!=='object') state.couponUsage={};
+  return state;
+}
+
+async function applyCoupon(){
+  const code=normCode(document.getElementById('couponInput')?.value);
+  const phone=(document.getElementById('custPhone')?.value||'').trim();
+  const hasPhone=/^\d{10}$/.test(phone);
+  const btn=document.getElementById('couponApplyBtn');
+  if(btn) btn.disabled=true;
+  try{
+    if(!/^[A-Z0-9]{3,20}$/.test(code)){
+      setCouponMsg('Enter a valid code.', 'err');
+      return;
+    }
+    const latest=await cloudLoad();
+    if(!latest){setCouponMsg('Cloud not connected. Try again.', 'err');return;}
+    await ensureCouponsInState(latest);
+
+    const coupons=latest.coupons||[];
+    const c=coupons.find(x=>normCode(x.code)===code && x.active!==false);
+    if(!c){setCouponMsg('Invalid or inactive coupon code.', 'err');return;}
+    if(isExpired(c)){setCouponMsg('This coupon is expired.', 'err');return;}
+
+    const subtotal=cartSubtotal();
+    if(subtotal < (c.minSubtotal||0)){
+      setCouponMsg(`Minimum order for this coupon is Rs.${c.minSubtotal}.`, 'err');
+      return;
+    }
+    if(c.type==='percent_combos' && cartComboSubtotal()<=0){
+      setCouponMsg('This coupon works on combo items only.', 'err');
+      return;
+    }
+
+    // Single-use checks (backend + localStorage) - enforced when phone is provided
+    const usage=latest.couponUsage?.[code]||{};
+    if(c.firstOrderOnly && !hasPhone){
+      setCouponMsg('Enter phone number to use this coupon.', 'err');
+      return;
+    }
+    if(hasPhone){
+      const localKey=`zorko_coupon_used_${code}_${phone}`;
+      if(localStorage.getItem(localKey)==='1'){
+        setCouponMsg('Coupon already used on this phone number.', 'err');
+        return;
+      }
+      if(c.onePerCustomer!==false && usage.usedPhones && usage.usedPhones[phone]){
+        setCouponMsg('Coupon already used by this phone number.', 'err');
+        return;
+      }
+    }
+    if(c.maxTotalUses!=null && Number(usage.totalUsed||0) >= Number(c.maxTotalUses)){
+      setCouponMsg('Coupon usage limit reached.', 'err');
+      return;
+    }
+    if(c.firstOrderOnly){
+      const hasOrder=(Array.isArray(latest.orders)?latest.orders:[]).some(o=>String(o.phone||'')===phone);
+      if(hasOrder){setCouponMsg('This coupon is for first order only.', 'err');return;}
+    }
+
+    appliedCouponCode=code;
+    appliedCoupon=c;
+    appliedDiscount=couponDiscountForCart(c);
+    if(c.type==='free_item'){
+      const freeId=String(c.freeItemId||'').trim();
+      const freeItem=freeId?getItem(freeId):null;
+      if(!freeItem){setCouponMsg('Free item is not configured correctly.', 'err'); appliedCouponCode=''; appliedCoupon=null; appliedDiscount=0; return;}
+      const freebieId=`free_${code}_${freeId}`;
+      const already=cart.find(i=>String(i.id)===freebieId && i.freebie);
+      if(!already){
+        const addons=[];
+        try{
+          if(freeItem.hasMojito) addons.push('Mojito: Surprise (Best Seller)');
+        }catch(e){}
+        cart.push({id:freebieId,refId:freeId,qty:1,name:(freeItem.name||'Free Item')+' (FREE)',price:0,addons,freebie:true,freebieOf:code});
+        updateCartUI();
+      }
+    }
+    if(appliedDiscount<=0 && c.type!=='free_delivery' && c.type!=='free_item'){
+      setCouponMsg('Coupon not applicable to this cart.', 'err');
+      appliedCouponCode=''; appliedCoupon=null; appliedDiscount=0;
+      return;
+    }
+    const clr=document.getElementById('couponClearBtn'); if(clr) clr.style.display='inline-flex';
+    if(c.type==='free_delivery' && DELIVERY_FEE===0){
+      setCouponMsg(`Coupon applied: ${code} (Delivery is already free)`, 'ok');
+    }else if(c.type==='free_item'){
+      setCouponMsg(`Coupon applied: ${code} (Free item added to cart)`, 'ok');
+    }else{
+      setCouponMsg(`Coupon applied: ${code} (Saved Rs.${appliedDiscount})`, 'ok');
+    }
+    renderOrderSum();
+  }finally{
+    if(btn) btn.disabled=false;
+  }
+}
+
+let _couponOffersCache=null;
+let _couponOffersCacheTs=0;
+
+async function getCouponsCached(){
+  if(_couponOffersCache && (Date.now()-_couponOffersCacheTs)<60000) return _couponOffersCache;
+  const latest=await cloudLoad();
+  if(latest){
+    await ensureCouponsInState(latest);
+    _couponOffersCache=latest.coupons||[];
+    _couponOffersCacheTs=Date.now();
+    return _couponOffersCache;
+  }
+  _couponOffersCache=getDefaultCoupons();
+  _couponOffersCacheTs=Date.now();
+  return _couponOffersCache;
+}
+
+function couponHumanDesc(c){
+  if(!c) return '';
+  if(c.type==='flat') return `Rs.${c.value} off above Rs.${c.minSubtotal||0}`;
+  if(c.type==='percent') return `${c.value}% off above Rs.${c.minSubtotal||0}`;
+  if(c.type==='percent_combos') return `${c.value}% off combos only`;
+  if(c.type==='free_delivery') return `Free delivery above Rs.${c.minSubtotal||0}`;
+  if(c.type==='free_item'){
+    const id=String(c.freeItemId||'').trim();
+    const it=id?getItem(id):null;
+    const nm=it?it.name:'item';
+    return `Free ${nm} above Rs.${c.minSubtotal||0}`;
+  }
+  return '';
+}
+
+function toggleCouponOffers(){
+  const el=document.getElementById('couponOffers');
+  if(!el) return;
+  const showing=(el.style.display && el.style.display!=='none');
+  el.style.display=showing?'none':'grid';
+  if(!showing) renderCouponOffers();
+}
+
+async function renderCouponOffers(){
+  const el=document.getElementById('couponOffers');
+  if(!el) return;
+  el.innerHTML='<div style="font-size:12px;color:var(--muted);font-weight:700">Loading offers...</div>';
+  const coupons=(await getCouponsCached()).filter(c=>c && c.active!==false);
+  const subtotal=cartSubtotal();
+  const comboSubtotal=cartComboSubtotal();
+
+  const list=coupons.map(c=>{
+    const expired=isExpired(c);
+    const minOk=subtotal>=(c.minSubtotal||0);
+    const comboOk=(c.type!=='percent_combos') || comboSubtotal>0;
+    const eligible=!expired && minOk && comboOk;
+    const saving=eligible?couponDiscountForCart(c):0;
+    return {c,expired,minOk,comboOk,eligible,saving};
+  }).sort((a,b)=>(b.saving-a.saving));
+
+  if(!list.length){
+    el.innerHTML='<div style="font-size:12px;color:var(--muted);font-weight:700">No offers available.</div>';
+    return;
+  }
+
+  el.innerHTML=list.map(x=>{
+    const c=x.c;
+    let note=couponHumanDesc(c);
+    if(x.expired) note='Expired';
+    else if(!x.minOk) note=`Add Rs.${Math.max(0,(c.minSubtotal||0)-subtotal)} more to use`;
+    else if(!x.comboOk) note='Add a combo item to use';
+    const saveTxt=
+      (c.type==='free_item' && x.eligible)?'Free item'
+      :((x.eligible && x.saving>0)?`Save Rs.${x.saving}`:(c.type==='free_delivery' && DELIVERY_FEE===0 && x.eligible?'No extra saving (already free delivery)':''));
+    return `<div class="coupon-offer ${x.eligible?'':'disabled'}">
+      <div class="co-left">
+        <div class="coupon-code">${normCode(c.code)}</div>
+        <div class="coupon-desc">${note}</div>
+        ${saveTxt?`<div class="coupon-save">${saveTxt}</div>`:''}
+      </div>
+      <button class="coupon-apply-sm" ${x.eligible?'':'disabled'} onclick="applyOffer('${normCode(c.code)}')">Apply</button>
+    </div>`;
+  }).join('');
+}
+
+function applyOffer(code){
+  const inp=document.getElementById('couponInput'); if(inp) inp.value=String(code||'');
+  applyCoupon();
+}
+
+// =================== DATA ===================
+const MOJITO_OPTIONS=['Surprise (Best Seller)','Mint','Blue Heaven','Orange Cinderella','Strawberry','Tangy Mango','Rose Petal (Must Try)','Pineapple Punch','Mary Litchi','Korean (Spicy)','Peach','Passion','Cranberry','Virgin'];
+const SANDWICH_OPTIONS=['Veggie Mumbai','Cheese Chilli','Veg Mexican','Paneer Maharaja'];
+const PIZZA_OPTIONS=['Margherita Pizza','Golden Harvest Pizza','Mushroom Pizza','Hot to Hell Pizza','Veg Exotica Pizza','Korean Pizza','Four Cheese Pizza','Paneer BBQ Pizza'];
+
+const ICE_TEA_OPTIONS=['Passion Fruit','American Blue'];
+
+// Big Movers — editable from admin panel
+let BIG_MOVERS = JSON.parse(localStorage.getItem('zorko_movers') || 'null') || [
+  'Royal Paneer Grilled Burger','Four Cheese Pizza','Cheese Burst','Korean Cheesy Fries',
+  'Kulhad Chocolaty Mud Pie','Brownie with Ice Cream','Oreo Milkshake','Cheese Chatori Maggi'
+];
+
+// =================== CLOUDINARY CONFIG ===================
+const CLOUDINARY_CLOUD = 'dyyjccvf7';
+const CLOUDINARY_PRESET = 'Zorko_upload';
+async function uploadToCloudinary(file){
+  const fd=new FormData();
+  fd.append('file',file);
+  fd.append('upload_preset',CLOUDINARY_PRESET);
+  let res;
+  try{
+    res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,{method:'POST',body:fd});
+  }catch(networkErr){
+    throw new Error('NETWORK: No internet or Cloudinary is blocked.');
+  }
+  if(!res.ok){
+    let errMsg='Upload failed (HTTP '+res.status+').';
+    try{
+      const errData=await res.json();
+      if(errData&&errData.error&&errData.error.message){
+        const m=errData.error.message;
+        if(m.includes('preset')||m.includes('unsigned')||res.status===400){
+          errMsg='PRESET_ERROR: '+m;
+        } else {
+          errMsg=m;
+        }
+      }
+    }catch(e){}
+    throw new Error(errMsg);
+  }
+  const data=await res.json();
+  if(!data.secure_url)throw new Error('Cloudinary returned no URL.');
+  return data.secure_url;
+}
+
+function handleUploadError(e,label){
+  const msg=e.message||'';
+  if(msg.startsWith('NETWORK')){
+    toast('❌ No internet. Check your connection.');
+  } else if(msg.startsWith('PRESET_ERROR')||msg.includes('preset')||msg.includes('unsigned')){
+    toast('❌ Cloudinary preset not set to Unsigned! See Settings → Cloud Setup for fix.');
+    console.error('[Zorko Upload] FIX: Go to cloudinary.com → Settings → Upload Presets → find "Zorko_upload" → change Mode to "Unsigned" → Save. Error: '+msg);
+  } else {
+    toast('❌ '+(label||'Upload')+' failed: '+msg.substring(0,60));
+    console.error('[Zorko Upload] '+label+' error:',msg);
+  }
+}
+
+// Image store: {itemId: URL} — Cloudinary URLs, works on all devices
+let dishImages = JSON.parse(localStorage.getItem('zorko_dish_images_v2') || '{}');
+let ambienceImages = JSON.parse(localStorage.getItem('zorko_ambience_images_v2') || '[]');
+let logoDataURL = localStorage.getItem('zorko_logo_v2') || '';
+let heroBgDataURL = localStorage.getItem('zorko_hero_bg_v2') || '';
+
+const MENU = {
+  combos:[
+    {id:'c1',name:'OG Burger + Any Mojito Combo',price:89,emoji:'🍔🥤',hasMojito:true},
+    {id:'c2',name:'OG Burger + Fries + Any Mojito',price:159,emoji:'🍔🍟🥤',hasMojito:true},
+    {id:'c3',name:'Margherita Pizza + Any Mojito',price:129,emoji:'🍕🥤',hasMojito:true},
+    {id:'c4',name:'Any Pizza + Any Mojito',price:209,emoji:'🍕🥤',hasMojito:true,hasPizza:true},
+    {id:'c5',name:'Any Sandwich + Any Mojito',price:179,emoji:'🥪🥤',hasMojito:true,hasSandwich:true},
+    {id:'c6',name:'2 Premium Cold Coffee',price:99,emoji:'☕☕'},
+    {id:'c7',name:'Any 3 Mojito',price:109,emoji:'🥤🥤🥤',hasMojito:true,mCount:3},
+  ],
+  burgers:[
+    {id:'b1',name:'Classic OG Burger',price:59,emoji:'🍔',desc:'Classic crispy patty with fresh veggies'},
+    {id:'b2',name:'Korean Burger',price:89,emoji:'🍔',desc:'Gochujang-glazed patty with Asian slaw'},
+    {id:'b3',name:'Double Tikki Burger',price:99,emoji:'🍔',desc:'Two juicy tikkis, double the satisfaction'},
+    {id:'b4',name:'Spicy Salsa BBQ Burger',price:99,emoji:'🍔',spicy:true,desc:'Hot salsa meets smoky BBQ sauce'},
+    {id:'b5',name:'Mexican King Burger',price:109,emoji:'🍔',desc:'Loaded with jalapeños and Mexican spices'},
+    {id:'b6',name:'Royal Paneer Grilled Burger',price:159,emoji:'🍔',bs:true,desc:'Premium grilled paneer with royal sauces'},
+  ],
+  wraps:[
+    {id:'w1',name:'Classic Veg Wrap',price:119,emoji:'🌯',desc:'Fresh veggies wrapped tight in a soft tortilla'},
+    {id:'w2',name:'Mexican Salsa Wrap',price:139,emoji:'🌯',spicy:true,desc:'Zesty Mexican filling with tangy salsa'},
+    {id:'w3',name:'Grilled Paneer Wrap',price:159,emoji:'🌯',bs:true,desc:'Chargrilled paneer with mint chutney'},
+  ],
+  pizza:[
+    {id:'p1',name:'Margherita Pizza',price:109,emoji:'🍕',desc:'Classic tomato base with mozzarella'},
+    {id:'p2',name:'Golden Harvest Pizza',price:129,emoji:'🍕',desc:'Sweet corn, capsicum and golden sauce'},
+    {id:'p3',name:'Mushroom Pizza',price:159,emoji:'🍕',desc:'Earthy mushrooms on creamy white sauce'},
+    {id:'p4',name:'Hot to Hell Pizza',price:169,emoji:'🍕',spicy:true,desc:'Extra hot and fiery for true spice lovers'},
+    {id:'p5',name:'Veg Exotica Pizza',price:179,emoji:'🍕',desc:'Premium exotic veggies and fragrant herbs'},
+    {id:'p6',name:'Korean Pizza',price:179,emoji:'🍕',desc:'Korean-style toppings with spicy gochujang sauce'},
+    {id:'p7',name:'Four Cheese Pizza',price:189,emoji:'🍕',bs:true,desc:'Four premium cheeses melted together perfectly'},
+    {id:'p8',name:'Paneer BBQ Pizza',price:209,emoji:'🍕',desc:'Smoky BBQ sauce with tender paneer chunks'},
+  ],
+  fries:[
+    {id:'f1',name:'Salted Fries',price:89,emoji:'🍟',desc:'Classic golden crispy salted fries'},
+    {id:'f2',name:'Peri Peri Fries',price:99,emoji:'🍟',spicy:true,desc:'Coated in smoky peri peri spice blend'},
+    {id:'f3',name:'Korean Cheesy Fries',price:159,emoji:'🍟',bs:true,desc:'Korean sauce with melted cheese on fries'},
+  ],
+  sandwich:[
+    {id:'s1',name:'Veggie Mumbai',price:129,emoji:'🥪',desc:'Classic Mumbai-style loaded sandwich'},
+    {id:'s2',name:'Cheese Chilli',price:149,emoji:'🥪',spicy:true,desc:'Spicy chilli with oozing melted cheese'},
+    {id:'s3',name:'Veg Mexican',price:159,emoji:'🥪',desc:'Mexican-spiced veggies in toasted bread'},
+    {id:'s4',name:'Paneer Maharaja',price:169,emoji:'🥪',bs:true,desc:'Premium paneer with special royal sauces'},
+  ],
+  maggi:[
+    {id:'m1',name:'Double Masala Maggi',price:79,emoji:'🍜',desc:'Extra masala for the dedicated maggi lover'},
+    {id:'m2',name:'Veg Masala Maggi',price:89,emoji:'🍜',desc:'Fresh veggies tossed with noodles'},
+    {id:'m3',name:'Hot Passion Spicy Maggi',price:99,emoji:'🍜',spicy:true,desc:'Fiery spice-lovers special maggi'},
+    {id:'m4',name:'Cheese Chatori Maggi',price:119,emoji:'🍜',bs:true,desc:'Loaded with oozing gooey cheese'},
+  ],
+  nachos:[
+    {id:'n1',name:'Nachos with Cheese Dip',price:69,emoji:'🌮',desc:'Crunchy nachos with warm cheese dip'},
+    {id:'n2',name:'Cheesy Delight Nachos',price:109,emoji:'🌮',bs:true,desc:'Extra cheese loaded over crunchy nachos'},
+    {id:'n3',name:'Nachos & Salsa',price:159,emoji:'🌮',desc:'Tangy salsa with perfectly crispy nachos'},
+  ],
+  dessert:[
+    {id:'d1',name:'Hot Brownie',price:109,emoji:'🍫',desc:'Warm gooey chocolate brownie served hot'},
+    {id:'d2',name:'Brownie with Ice Cream',price:149,emoji:'🍫',bs:true,desc:'Hot brownie + cold ice cream = pure heaven'},
+    {id:'d3',name:'Sizzling Brownie',price:189,emoji:'🍫',desc:'Served dramatically on a hot sizzler plate'},
+    {id:'d4',name:'Kulhad Chocolaty Mud Pie',price:209,emoji:'🍫',bs:true,desc:'Premium mud pie served in a clay kulhad'},
+  ],
+  beverages:[
+    {id:'bv1',name:'Mojito (Any Flavour)',price:59,emoji:'🥤',bs:true,hasMojito:true,desc:'14 flavours — Surprise, Mint, Blue Heaven & more. Refreshing, fizzy and light.'},
+    {id:'bv2',name:'Ice Tea',price:49,emoji:'🧊',desc:'Chilled, refreshing ice tea — pick your flavour.',hasIceTea:true},
+    {id:'bv3',name:'Premium Cold Coffee',price:59,emoji:'☕',desc:'Smooth and creamy classic cold coffee'},
+    {id:'bv4',name:'Strong Cold Coffee',price:69,emoji:'☕',desc:'Bold and intense — for true coffee lovers'},
+    {id:'bv5',name:'Chocolate Cold Coffee',price:89,emoji:'☕',bs:true,desc:'Rich chocolate blended with cold coffee — thick and indulgent'},
+    {id:'bv6',name:'Rose Milkshake',price:89,emoji:'🥛',desc:'Floral rose-flavoured thick shake with smooth texture'},
+    {id:'bv7',name:'Strawberry Milkshake',price:89,emoji:'🍓',desc:'Sweet and refreshing strawberry shake'},
+    {id:'bv8',name:'Oreo Milkshake',price:109,emoji:'🍪',bs:true,desc:'Crushed Oreo blended into a creamy, rich shake'},
+    {id:'bv9',name:'KitKat Milkshake',price:119,emoji:'🍫',desc:'Chunky KitKat blended into a chocolatey milkshake'},
+    {id:'bv10',name:'Brownie Milkshake',price:129,emoji:'🤎',desc:'Thick shake loaded with rich brownie flavour'},
+  ]
+};
+
+const ADDONS={
+  burgers:[
+    {name:'Cheese Slice',price:20},
+    {name:'Cheese Injector',price:40}
+  ],
+  pizza:[
+    {name:'Double Cheese',price:40}
+  ]
+};
+
+// =================== STATE ===================
+let cart=[],selPayment='UPI',orders=[],ordersOn=true,disabledIds=new Set(),hiddenIds=new Set();
+let customCategories=[];
+let customMenu={}; // { categoryId: [items...] }
+let priceOverrides={}; // { itemId: number }
+let itemOverrides={}; // { itemId: { name?: string, desc?: string, emoji?: string } }
+
+// =================== CLOUD SYNC (SUPABASE) ===================
+async function cloudLoad(){
+  return await loadFromCloud();
+}
+
+async function cloudSave(data){
+  try{
+    const ok=await saveToCloud(data);
+    return !!ok;
+  }catch(e){
+    console.error(e);
+    return false;
+  }
+}
+
+async function saveOrderToSheet(order){
+  // Backward-compatible helper (older code paths may still call this).
+  const data=await cloudLoad();
+  if(!data) return;
+  data.orders=Array.isArray(data.orders)?data.orders:[];
+  data.orders.push(order);
+  await cloudSave(data);
+}
+
+async function saveStateToSheet(){
+  const data=await cloudLoad();
+  if(!data){toast('âŒ Cloud sync failed. Check Supabase table/policies.');return;}
+  data.ordersOn=ordersOn;
+  data.dishImages=dishImages;
+  data.images=dishImages;
+  data.ambienceImages=ambienceImages;
+  data.logoDataURL=logoDataURL;
+  data.heroBgDataURL=heroBgDataURL;
+  data.disabledIds=Array.from(disabledIds||[]);
+  data.hiddenIds=Array.from(hiddenIds||[]);
+  data.customCategories=customCategories||[];
+  data.customMenu=customMenu||{};
+  data.priceOverrides=priceOverrides||{};
+  data.itemOverrides=itemOverrides||{};
+  await cloudSave(data);
+}
+
+async function loadOrders(){
+  // Instant cache first (for fast page load)
+  try{const s=localStorage.getItem('zorko_orders');if(s)orders=JSON.parse(s);}catch(e){}
+  try{const s=localStorage.getItem('zorko_hidden_ids');if(s)hiddenIds=new Set(JSON.parse(s));}catch(e){}
+  try{const s=localStorage.getItem('zorko_disabled_ids');if(s)disabledIds=new Set(JSON.parse(s));}catch(e){}
+  try{const s=localStorage.getItem('zorko_custom_categories');if(s)customCategories=JSON.parse(s)||[];}catch(e){}
+  try{const s=localStorage.getItem('zorko_custom_menu');if(s)customMenu=JSON.parse(s)||{};}catch(e){}
+  try{const s=localStorage.getItem('zorko_price_overrides');if(s)priceOverrides=JSON.parse(s)||{};}catch(e){}
+  try{const s=localStorage.getItem('zorko_item_overrides');if(s)itemOverrides=JSON.parse(s)||{};}catch(e){}
+
+  const data=await cloudLoad();
+  if(!data) return;
+
+  orders=Array.isArray(data.orders)?data.orders:[];
+  try{localStorage.setItem('zorko_orders',JSON.stringify(orders));}catch(e){}
+
+  ordersOn=!!data.ordersOn;
+  const banner=document.getElementById('pausedBanner');
+  if(banner)banner.classList.toggle('show',!ordersOn);
+  const tog=document.getElementById('ordersToggle');
+  if(tog)tog.checked=ordersOn;
+
+  const loadedDishImages=(data.dishImages||data.images);
+  if(loadedDishImages){dishImages=loadedDishImages;try{localStorage.setItem('zorko_dish_images_v2',JSON.stringify(dishImages));}catch(e){}}
+  if(Array.isArray(data.ambienceImages)){ambienceImages=data.ambienceImages;try{localStorage.setItem('zorko_ambience_images_v2',JSON.stringify(ambienceImages));}catch(e){}}
+  if(typeof data.logoDataURL==='string'){logoDataURL=data.logoDataURL;try{localStorage.setItem('zorko_logo_v2',logoDataURL);}catch(e){}}
+  if(typeof data.heroBgDataURL==='string'){heroBgDataURL=data.heroBgDataURL;try{localStorage.setItem('zorko_hero_bg_v2',heroBgDataURL);}catch(e){}}
+  disabledIds=new Set(Array.isArray(data.disabledIds)?data.disabledIds:[]);
+  hiddenIds=new Set(Array.isArray(data.hiddenIds)?data.hiddenIds:[]);
+  try{localStorage.setItem('zorko_disabled_ids',JSON.stringify(Array.from(disabledIds)));}catch(e){}
+  try{localStorage.setItem('zorko_hidden_ids',JSON.stringify(Array.from(hiddenIds)));}catch(e){}
+  customCategories=Array.isArray(data.customCategories)?data.customCategories:[];
+  customMenu=(data.customMenu&&typeof data.customMenu==='object')?data.customMenu:{};
+  priceOverrides=(data.priceOverrides&&typeof data.priceOverrides==='object')?data.priceOverrides:{};
+  itemOverrides=(data.itemOverrides&&typeof data.itemOverrides==='object')?data.itemOverrides:{};
+  try{localStorage.setItem('zorko_custom_categories',JSON.stringify(customCategories));}catch(e){}
+  try{localStorage.setItem('zorko_custom_menu',JSON.stringify(customMenu));}catch(e){}
+  try{localStorage.setItem('zorko_price_overrides',JSON.stringify(priceOverrides));}catch(e){}
+  try{localStorage.setItem('zorko_item_overrides',JSON.stringify(itemOverrides));}catch(e){}
+  applyPriceOverrides();
+  applyItemOverrides();
+}
+
+async function saveOrders(){
+  try{localStorage.setItem('zorko_orders',JSON.stringify(orders));}catch(e){}
+  const data=await cloudLoad();
+  if(!data){toast('âŒ Cloud sync failed. Check Supabase table/policies.');return;}
+  data.orders=orders;
+  data.ordersOn=ordersOn;
+  data.dishImages=dishImages;
+  data.images=dishImages;
+  data.ambienceImages=ambienceImages;
+  data.logoDataURL=logoDataURL;
+  data.heroBgDataURL=heroBgDataURL;
+  data.disabledIds=Array.from(disabledIds||[]);
+  data.hiddenIds=Array.from(hiddenIds||[]);
+  data.customCategories=customCategories||[];
+  data.customMenu=customMenu||{};
+  data.priceOverrides=priceOverrides||{};
+  data.itemOverrides=itemOverrides||{};
+  await cloudSave(data);
+}
+
+// Legacy GS stubs (no-op)
+let GS_URL='';
+function saveGS(){
+  const url=document.getElementById('gsUrl')?.value?.trim();
+  if(url){GS_URL=url;localStorage.setItem('zorko_gs_url',url);}
+}
+function clearGS(){GS_URL='';localStorage.removeItem('zorko_gs_url');}
+
+// =================== HELPERS ===================
+function getCat(id){
+  for(const[cat,items]of Object.entries(MENU)){
+    if(Array.isArray(items)&&items.find(i=>i.id===id)) return cat;
+  }
+  for(const [cat,items] of Object.entries(customMenu||{})){
+    if(Array.isArray(items)&&items.find(i=>i.id===id)) return cat;
+  }
+  return null;
+}
+function getItem(id){
+  for(const cat of Object.values(MENU)){
+    if(!Array.isArray(cat)) continue;
+    const f=cat.find(i=>i.id===id);
+    if(f) return f;
+  }
+  for(const items of Object.values(customMenu||{})){
+    if(!Array.isArray(items)) continue;
+    const f=items.find(i=>i.id===id);
+    if(f) return f;
+  }
+  return null;
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
+function imgTag(id){const src=dishImages[id];return src?`<img src="${src}" alt="" loading="lazy">`:'';};
+
+function applyPriceOverrides(){
+  try{
+    const overrides=priceOverrides&&typeof priceOverrides==='object'?priceOverrides:{};
+    for(const cat of Object.keys(MENU)){
+      if(!Array.isArray(MENU[cat])) continue;
+      MENU[cat].forEach(i=>{
+        if(i&&i.id && overrides[i.id]!=null){
+          const np=parseInt(overrides[i.id],10);
+          if(!Number.isNaN(np) && np>0) i.price=np;
+        }
+      });
+    }
+    for(const [cat,items] of Object.entries(customMenu||{})){
+      if(!Array.isArray(items)) continue;
+      items.forEach(i=>{
+        if(i&&i.id && overrides[i.id]!=null){
+          const np=parseInt(overrides[i.id],10);
+          if(!Number.isNaN(np) && np>0) i.price=np;
+        }
+      });
+    }
+  }catch(e){}
+}
+
+function applyItemOverrides(){
+  try{
+    const overrides=itemOverrides&&typeof itemOverrides==='object'?itemOverrides:{};
+    const applyToItem=(i)=>{
+      if(!i || !i.id) return;
+      const ov=overrides[i.id];
+      if(!ov || typeof ov!=='object') return;
+      if(typeof ov.name==='string' && ov.name.trim()) i.name=ov.name.trim();
+      if(typeof ov.desc==='string') i.desc=ov.desc;
+      if(typeof ov.emoji==='string' && ov.emoji.trim()) i.emoji=ov.emoji.trim();
+    };
+    for(const cat of Object.keys(MENU)){
+      if(!Array.isArray(MENU[cat])) continue;
+      MENU[cat].forEach(applyToItem);
+    }
+    for(const items of Object.values(customMenu||{})){
+      if(!Array.isArray(items)) continue;
+      items.forEach(applyToItem);
+    }
+  }catch(e){}
+}
+
+function getItemsForCategory(cat){
+  const base=Array.isArray(MENU[cat])?MENU[cat]:[];
+  const extra=Array.isArray(customMenu&&customMenu[cat])?customMenu[cat]:[];
+  return base.concat(extra).filter(i=>i&&i.id&&!hiddenIds.has(i.id));
+}
+
+// =================== LOGO / HERO BG ===================
+function applyLogo(){
+  if(logoDataURL){
+    const img=document.getElementById('navLogoImg');
+    img.src=logoDataURL;img.style.display='block';
+    document.getElementById('navLogoText').style.display='none';
+    const fi=document.getElementById('footerLogoImg');
+    fi.src=logoDataURL;fi.style.display='block';
+    document.getElementById('footerLogoText').style.display='none';
+  }
+}
+function applyHeroBg(){
+  if(heroBgDataURL){
+    const el=document.getElementById('heroBg');
+    el.innerHTML=`<img src="${heroBgDataURL}" alt="">`;
+  }
+}
+async function uploadLogo(input){
+  const file=input.files[0];if(!file)return;
+  toast('⏳ Uploading logo...');
+  try{
+    const url=await uploadToCloudinary(file);
+    logoDataURL=url;localStorage.setItem('zorko_logo_v2',url);applyLogo();toast('✅ Logo updated!');
+    await saveStateToSheet();
+  }catch(e){handleUploadError(e,'Logo');}
+}
+async function uploadHeroBg(input){
+  const file=input.files[0];if(!file)return;
+  toast('⏳ Uploading background...');
+  try{
+    const url=await uploadToCloudinary(file);
+    heroBgDataURL=url;localStorage.setItem('zorko_hero_bg_v2',url);applyHeroBg();toast('✅ Hero background updated!');
+    await saveStateToSheet();
+  }catch(e){handleUploadError(e,'Hero Background');}
+}
+function renderAmbience(){
+  const grid=document.getElementById('ambienceGrid');
+  const slots=Math.max(4, ambienceImages.length+1);
+  let html='';
+  ambienceImages.forEach((img,i)=>{
+    html+=`<div class="ambience-card">
+      <img src="${img.src}" alt="${img.label||'Zorko'}">
+      <div class="amb-overlay"><span class="amb-label">${img.label||'Zorko Bihar Sharif'}</span></div>
+    </div>`;
+  });
+  if(ambienceImages.length<8){
+    html+=`<div class="amb-placeholder" onclick="document.getElementById('ambUploadInput').click()">
+      <span class="amb-ph-icon">📸</span>
+      <span class="amb-ph-txt">Add café / ambience photo</span>
+    </div>`;
+  }
+  grid.innerHTML=html;
+}
+
+function renderAmbienceAdmin(){
+  const el=document.getElementById('aImages');
+  let html=`<div style="background:#f0fff4;border:1.5px solid #22c55e;border-radius:10px;padding:10px 12px;font-size:12px;font-weight:700;color:#166534;margin-bottom:1rem">☁ Images upload to <strong>Cloudinary</strong> — permanent, works on all devices, no storage limit!</div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:1rem;font-weight:600">Upload dish images, café photos and ambience pictures.</p>
+  <div style="margin-bottom:1.5rem">
+    <p style="font-weight:800;font-size:14px;margin-bottom:8px">📸 Ambience / Café Photos</p>
+    <div class="amb-edit-grid" id="ambEditGrid"></div>
+    <label style="display:inline-flex;align-items:center;gap:6px;background:var(--dark);color:#fff;border:none;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;font-family:Outfit,sans-serif" onclick="document.getElementById('ambUploadInput').click()">📸 Add Ambience Photo</label>
+    <input type="file" id="ambUploadInput" accept="image/*" style="display:none" onchange="uploadAmbience(this)">
+  </div>
+  <div>
+    <p style="font-weight:800;font-size:14px;margin-bottom:8px">🍔 Dish Images</p>
+    <div class="dish-img-grid" id="dishImgGrid"></div>
+  </div>`;
+  el.innerHTML=html;
+  renderAmbienceEditGrid();
+  renderDishImgGrid();
+}
+
+function renderAmbienceEditGrid(){
+  const grid=document.getElementById('ambEditGrid');if(!grid)return;
+  grid.innerHTML=ambienceImages.map((img,i)=>`
+    <div class="amb-edit-card">
+      <div class="amb-edit-thumb"><img src="${img.src}" alt=""></div>
+      <button class="amb-edit-btn" style="background:var(--red)" onclick="removeAmbience(${i})">🗑 Remove</button>
+    </div>`).join('') + (ambienceImages.length===0?'<p style="color:var(--muted);font-size:12px;font-weight:600">No photos yet. Add some!</p>':'');
+}
+
+async function uploadAmbience(input){
+  const file=input.files[0];if(!file)return;
+  toast('⏳ Uploading photo...');
+  try{
+    const url=await uploadToCloudinary(file);
+    ambienceImages.push({src:url,label:'Zorko Bihar Sharif'});
+    localStorage.setItem('zorko_ambience_images_v2',JSON.stringify(ambienceImages));
+    renderAmbience();renderAmbienceEditGrid();
+    saveStateToSheet();
+    toast('✅ Photo added!');
+  }catch(e){handleUploadError(e,'Ambience Photo');}
+  input.value='';
+}
+
+function removeAmbience(i){
+  ambienceImages.splice(i,1);
+  localStorage.setItem('zorko_ambience_images_v2',JSON.stringify(ambienceImages));
+  renderAmbience();renderAmbienceEditGrid();
+  saveStateToSheet();
+  toast('Photo removed');
+}
+
+function renderDishImgGrid(){
+  const grid=document.getElementById('dishImgGrid');if(!grid)return;
+  const allItems=Object.values(MENU).flat().concat(Object.values(customMenu||{}).flat()).filter(i=>i&&i.id&&!hiddenIds.has(i.id));
+  grid.innerHTML=allItems.map(item=>`
+    <div class="dish-img-item">
+      <div class="dish-img-thumb">
+        ${dishImages[item.id]?`<img src="${dishImages[item.id]}" alt="">`:'<span>'+item.emoji+'</span>'}
+      </div>
+      <div class="dish-img-name">${item.name}</div>
+      <button class="dish-upload-btn" onclick="document.getElementById('di_${item.id}').click()">📷 Change</button>
+      <input type="file" id="di_${item.id}" accept="image/*" style="display:none" onchange="uploadDishImage('${item.id}',this)">
+    </div>`).join('');
+}
+
+async function uploadDishImage(id,input){
+  const file=input.files[0];if(!file)return;
+  toast('⏳ Uploading dish image...');
+  try{
+    const url=await uploadToCloudinary(file);
+    dishImages[id]=url;
+    localStorage.setItem('zorko_dish_images_v2',JSON.stringify(dishImages));
+    renderAll();renderDishImgGrid();
+    saveStateToSheet();
+    toast('✅ Dish image updated!');
+  }catch(e){handleUploadError(e,'Dish Image');}
+}
+
+// =================== RENDER ===================
+function renderAll(){
+  renderCombos();renderMovers();
+  renderGrid('burgersGrid',getItemsForCategory('burgers'),'burgers');
+  renderGrid('pizzaGrid',getItemsForCategory('pizza'),'pizza');
+  renderGrid('wrapsGrid',getItemsForCategory('wraps'),'wraps');
+  renderGrid('friesGrid',getItemsForCategory('fries'),'fries');
+  renderGrid('sandwichGrid',getItemsForCategory('sandwich'),'sandwich');
+  renderGrid('maggiGrid',getItemsForCategory('maggi'),'maggi');
+  renderGrid('nachosGrid',getItemsForCategory('nachos'),'nachos');
+  renderGrid('dessertGrid',getItemsForCategory('dessert'),'dessert');
+  renderGrid('beveragesGrid',getItemsForCategory('beverages'),'beverages');
+  renderCustomCategories();
+}
+
+function customSectionId(catId){return 'custom_'+String(catId||'').replace(/[^a-zA-Z0-9_-]/g,'');}
+
+function renderCustomCategories(){
+  const tabsEl=document.getElementById('customCatTabs');
+  const secsEl=document.getElementById('customSections');
+  if(!tabsEl || !secsEl) return;
+  const cats=Array.isArray(customCategories)?customCategories:[];
+  if(!cats.length){tabsEl.innerHTML='';secsEl.innerHTML='';setupSectionObserver();return;}
+
+  tabsEl.innerHTML=cats.map(c=>{
+    const secId=customSectionId(c.id);
+    const label=(c.emoji?c.emoji+' ':'')+(c.name||'Category');
+    return `<button class="cat-tab" onclick="scrollTo2('${secId}',this)">${label}</button>`;
+  }).join('');
+
+  secsEl.innerHTML=cats.map(c=>{
+    const secId=customSectionId(c.id);
+    const gid='grid_'+secId;
+    return `<div class="section" id="${secId}">
+      <div class="sec-head"><span class="sec-icon">${c.emoji||'✨'}</span><span class="sec-title">${c.name||'Category'}</span></div>
+      <div class="menu-grid" id="${gid}"></div>
+    </div>`;
+  }).join('');
+
+  cats.forEach(c=>{
+    const secId=customSectionId(c.id);
+    const gid='grid_'+secId;
+    const items=getItemsForCategory(String(c.id));
+    if(!items.length){
+      const grid=document.getElementById(gid);
+      if(grid) grid.innerHTML='<div class="no-res" style="grid-column:1/-1"><span class="no-res-icon">✨</span><p style="font-size:13px;font-weight:800">No items yet in this category.</p><p style="font-size:11px;color:var(--muted);font-weight:700;margin-top:4px">Owner Panel → Menu → Add New Item</p></div>';
+    }else{
+      renderGrid(gid,items,String(c.id));
+    }
+  });
+
+  setupSectionObserver();
+}
+
+function renderCombos(){
+  document.getElementById('combosGrid').innerHTML=MENU.combos.map(c=>`
+    <div class="combo-card" id="card_${c.id}">
+      <div class="combo-ribbon">COMBO</div>
+      <div class="combo-emoji">${dishImages[c.id]?`<img src="${dishImages[c.id]}" alt="${c.name}" loading="lazy">`:c.emoji}</div>
+      <div class="combo-name">${c.name}</div>
+      <div class="combo-price">₹${c.price}</div>
+      ${c.hasPizza?`<select class="combo-select" id="pz_${c.id}"><option value="">— Choose Pizza —</option>${PIZZA_OPTIONS.map(p=>`<option>${p}</option>`).join('')}</select>`:''}
+      ${c.hasSandwich?`<select class="combo-select" id="sw_${c.id}"><option value="">— Choose Sandwich —</option>${SANDWICH_OPTIONS.map(s=>`<option>${s}</option>`).join('')}</select>`:''}
+      ${c.hasMojito?`<select class="combo-select" id="moj_${c.id}"><option value="">— Choose Mojito${c.mCount?' (1st)':''} —</option>${MOJITO_OPTIONS.map(m=>`<option>${m}</option>`).join('')}</select>`:''}
+      ${c.mCount===3?`<select class="combo-select" id="moj2_${c.id}"><option value="">— Choose Mojito (2nd) —</option>${MOJITO_OPTIONS.map(m=>`<option>${m}</option>`).join('')}</select><select class="combo-select" id="moj3_${c.id}"><option value="">— Choose Mojito (3rd) —</option>${MOJITO_OPTIONS.map(m=>`<option>${m}</option>`).join('')}</select>`:''}
+      <button class="combo-add-btn" onclick="addCombo('${c.id}')">Add to Cart +</button>
+    </div>`).join('');
+}
+
+function renderMovers(){
+  const items=Object.values(MENU).flat().concat(Object.values(customMenu||{}).flat()).filter(i=>i&&i.id&&BIG_MOVERS.includes(i.name)&&!hiddenIds.has(i.id));
+  document.getElementById('moversGrid').innerHTML=items.map(item=>{
+    const cat=getCat(item.id);
+    const imgSrc=dishImages[item.id];
+    const mojitoSel=item.hasMojito?`<select class="combo-select" id="mmoj_${item.id}" style="margin:6px 0 4px;font-size:11px" onclick="event.stopPropagation()"><option value="">— Choose Mojito Flavour —</option>${MOJITO_OPTIONS.map(m=>`<option>${m}</option>`).join('')}</select>`:'';
+    const iceTeaSel=item.hasIceTea?`<select class="combo-select" id="mict_${item.id}" style="margin:6px 0 4px;font-size:11px" onclick="event.stopPropagation()"><option value="">— Choose Ice Tea Flavour —</option>${ICE_TEA_OPTIONS.map(m=>`<option>${m}</option>`).join('')}</select>`:'';
+    return`<div class="mover-card" id="mover_${item.id}" onclick="scrollToItem('${item.id}')">
+      <div class="mover-img">${imgSrc?`<img src="${imgSrc}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;border-radius:14px">`:item.emoji}</div>
+      <div class="mover-body">
+        <div class="mover-name">${item.name}</div>
+        <div class="mover-desc">${item.desc||''}</div>
+        ${mojitoSel}${iceTeaSel}
+        <div class="mover-foot">
+          <span class="mover-price">₹${item.price}</span>
+          <div id="mc_${item.id}" onclick="event.stopPropagation()"><button class="add-btn" onclick="addItemFromMover('${item.id}','${cat}')">+</button></div>
+        </div>
+      </div>
+    </div>`;}).join('');
+}
+
+function scrollToItem(id){
+  const el=document.getElementById('card_'+id);
+  if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 3px var(--amber)';setTimeout(()=>el.style.boxShadow='',1800);}
+}
+
+function renderGrid(gid,items,cat){
+  const addons=ADDONS[cat]||[];
+  const visibleItems=items.filter(item=>item&&item.id&&!hiddenIds.has(item.id));
+  document.getElementById(gid).innerHTML=visibleItems.map(item=>{
+    const imgSrc=dishImages[item.id];
+    const mojitoSel=item.hasMojito?`<select class="combo-select" id="moj_${item.id}" style="margin-bottom:6px"><option value="">— Choose Mojito Flavour —</option>${MOJITO_OPTIONS.map(m=>`<option>${m}</option>`).join('')}</select>`:'';
+    const iceTeaSel=item.hasIceTea?`<select class="combo-select" id="ict_${item.id}" style="margin-bottom:6px"><option value="">— Choose Ice Tea Flavour —</option>${ICE_TEA_OPTIONS.map(m=>`<option>${m}</option>`).join('')}</select>`:'';
+    return`<div class="menu-card" id="card_${item.id}" ${disabledIds.has(item.id)?'style="opacity:0.45"':''}>
+      <div class="menu-img" id="img_${item.id}">
+        ${imgSrc?`<img src="${imgSrc}" alt="${item.name}" loading="lazy">`:`<span class="menu-emoji-fb">${item.emoji}</span>`}
+      </div>
+      <div class="menu-body">
+        ${item.bs?'<span class="badge-bs">⭐ Best Seller</span>':''}
+        ${item.spicy?'<span class="badge-spicy">🌶 Spicy</span>':''}
+        <div class="menu-name">${item.name}</div>
+        <div class="menu-desc">${item.desc||''}</div>
+        ${mojitoSel}${iceTeaSel}
+        ${addons.length?`<div class="addon-box"><div class="addon-ttl">Add-ons</div>${addons.map(a=>`<div class="addon-row"><label class="addon-label"><input type="checkbox" class="addon-cb" data-item="${item.id}" data-addon="${a.name}" data-price="${a.price}"> ${a.name}</label><span class="addon-p">+₹${a.price}</span></div>`).join('')}</div>`:''}
+        <div class="menu-foot">
+          <span class="menu-price" id="pr_${item.id}">₹${item.price}</span>
+          <div id="ctrl_${item.id}"><button class="add-btn" onclick="addItem('${item.id}','${cat}')">+</button></div>
+        </div>
+      </div>
+    </div>`;}).join('');
+}
+
+// =================== CART LOGIC ===================
+function addItemFromMover(id,cat){
+  const item=getItem(id);if(!item)return;
+  const mojEl=document.getElementById('mmoj_'+id);
+  const ictEl=document.getElementById('mict_'+id);
+  if(item.hasMojito&&mojEl&&!mojEl.value){toast('⚠️ Choose a Mojito flavour first!');mojEl.focus();return;}
+  if(item.hasIceTea&&ictEl&&!ictEl.value){toast('⚠️ Choose an Ice Tea flavour first!');ictEl.focus();return;}
+  // sync selection to main card dropdown if exists
+  const mainMoj=document.getElementById('moj_'+id);
+  const mainIct=document.getElementById('ict_'+id);
+  if(mojEl&&mojEl.value&&mainMoj)mainMoj.value=mojEl.value;
+  if(ictEl&&ictEl.value&&mainIct)mainIct.value=ictEl.value;
+  addItem(id,cat);
+}
+
+function addItem(id,cat){
+  if(!ordersOn){toast('⏸ Orders paused. Please call us!');return;}
+  if(disabledIds.has(id)){toast('❌ Item currently unavailable');return;}
+  const item=getItem(id);if(!item)return;
+  // Check flavour selection
+  const mojEl=document.getElementById('moj_'+id);
+  const ictEl=document.getElementById('ict_'+id);
+  if(item.hasMojito&&mojEl&&!mojEl.value){toast('⚠️ Please choose a Mojito flavour first!');mojEl.focus();return;}
+  if(item.hasIceTea&&ictEl&&!ictEl.value){toast('⚠️ Please choose an Ice Tea flavour first!');ictEl.focus();return;}
+  const addons=ADDONS[cat]||[];
+  let extra=0,chosen=[];
+  addons.forEach(a=>{const c=document.querySelector(`input[data-item="${id}"][data-addon="${a.name}"]`);if(c&&c.checked){extra+=a.price;chosen.push(a.name);}});
+  if(mojEl&&mojEl.value)chosen.unshift('Flavour: '+mojEl.value);
+  if(ictEl&&ictEl.value)chosen.unshift('Flavour: '+ictEl.value);
+  const ex=cart.find(c=>c.id===id&&JSON.stringify(c.addons)===JSON.stringify(chosen));
+  if(ex)ex.qty++;else cart.push({id,name:item.name,price:item.price+extra,addons:chosen,qty:1});
+  updateCartUI();updateCtrl(id);toast('✅ '+item.name+' added!');
+}
+
+function addCombo(id){
+  if(!ordersOn){toast('⏸ Orders paused. Please call us!');return;}
+  const c=MENU.combos.find(x=>x.id===id);if(!c)return;
+  let subs=[];
+  if(c.hasPizza){const el=document.getElementById('pz_'+id);if(!el||!el.value){toast('Choose a pizza first');return;}subs.push('Pizza: '+el.value);}
+  if(c.hasSandwich){const el=document.getElementById('sw_'+id);if(!el||!el.value){toast('Choose a sandwich first');return;}subs.push('Sandwich: '+el.value);}
+  if(c.hasMojito){const el=document.getElementById('moj_'+id);if(!el||!el.value){toast('Choose a mojito first');return;}subs.push('Mojito: '+el.value);}
+  if(c.mCount===3){
+    const m2=document.getElementById('moj2_'+id);const m3=document.getElementById('moj3_'+id);
+    if(!m2||!m2.value){toast('Choose 2nd mojito');return;}subs.push('Mojito 2: '+m2.value);
+    if(!m3||!m3.value){toast('Choose 3rd mojito');return;}subs.push('Mojito 3: '+m3.value);
+  }
+  cart.push({id:'combo_'+id+'_'+Date.now(),name:c.name,price:c.price,addons:subs,qty:1,isCombo:true});
+  updateCartUI();toast('✅ '+c.name+' added!');
+}
+
+function updateCtrl(id){
+  const inCart=cart.find(c=>c.id===id);
+  const cat=getCat(id)||'';
+  const setCtrl=(elId)=>{
+    const el=document.getElementById(elId);if(!el)return;
+    if(inCart)el.innerHTML=`<div class="qty-ctrl"><button class="qty-btn" onclick="chQty('${id}',-1)">−</button><span class="qty-num">${inCart.qty}</span><button class="qty-btn" onclick="chQty('${id}',1)">+</button></div>`;
+    else el.innerHTML=`<button class="add-btn" onclick="addItem('${id}','${cat}')">+</button>`;
+  };
+  setCtrl('ctrl_'+id);setCtrl('mc_'+id);
+}
+
+function chQty(id,d){
+  const i=cart.find(c=>c.id===id);if(!i)return;
+  i.qty+=d;if(i.qty<=0)cart=cart.filter(c=>c.id!==id);
+  updateCartUI();updateCtrl(id);
+}
+
+function updateCartUI(){
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  const cc=document.getElementById('cartCount');
+  cc.textContent=count;
+  if(count>0){cc.classList.add('bump');setTimeout(()=>cc.classList.remove('bump'),260);}
+  document.getElementById('cartTotal').textContent='₹'+total;
+  const itemsEl=document.getElementById('cartItems'),foot=document.getElementById('cartFoot'),bar=document.getElementById('stickyBar');
+  const minNote=document.getElementById('cartMinNote');
+  const chkBtn=document.getElementById('checkoutBtn');
+  if(!cart.length){
+    itemsEl.innerHTML='<div class="cart-empty"><span class="cart-empty-icon">🛒</span><p>Cart is empty!<br>Add some yummy items.</p></div>';
+    foot.style.display='none';bar.classList.remove('show');
+  }else{
+    itemsEl.innerHTML=cart.map(i=>`<div class="cart-item">
+      <div class="ci-info">
+        <div class="ci-name">${i.name}</div>
+        ${i.addons&&i.addons.length?`<div class="ci-sub">${i.addons.join(' · ')}</div>`:''}
+        <div class="ci-price">₹${i.price*i.qty}</div>
+      </div>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="cartDec('${i.id}')">−</button>
+        <span class="qty-num">${i.qty}</span>
+        <button class="qty-btn" onclick="cartInc('${i.id}')">+</button>
+      </div>
+      <button class="ci-rm" onclick="cartRm('${i.id}')">🗑</button>
+    </div>`).join('');
+    foot.style.display='block';bar.classList.add('show');
+    document.getElementById('sbCount').textContent=count+' item'+(count>1?'s':'');
+    document.getElementById('sbTotal').textContent='₹'+total;
+    // Min order check
+    const needed=MIN_ORDER-total;
+    if(needed>0){
+      minNote.classList.add('show');
+      document.getElementById('cartMinNeeded').textContent=needed;
+      chkBtn.disabled=true;
+      chkBtn.textContent=`Add ₹${needed} more (Min ₹${MIN_ORDER})`;
+    }else{
+      minNote.classList.remove('show');
+      chkBtn.disabled=false;
+      chkBtn.innerHTML='Proceed to Checkout →';
+    }
+  }
+}
+
+function cartDec(id){const i=cart.find(c=>c.id===id);if(!i)return;i.qty--;if(i.qty<=0)cart=cart.filter(c=>c.id!==id);updateItemCtrlById(id);updateCartUI();}
+function cartInc(id){const i=cart.find(c=>c.id===id);if(i){i.qty++;updateCartUI();}}
+function cartRm(id){cart=cart.filter(c=>c.id!==id);updateItemCtrlById(id);updateCartUI();}
+function updateItemCtrlById(id){if(!id.startsWith('combo_') && !id.startsWith('free_'))updateCtrl(id);}
+
+function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartDrawer').classList.add('open');document.body.style.overflow='hidden';}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartDrawer').classList.remove('open');document.body.style.overflow='';}
+
+// =================== LOCATION DETECTION ===================
+function detectLocation(){
+  const btn=document.getElementById('locBtn');
+  const status=document.getElementById('locStatus');
+  if(!navigator.geolocation){status.textContent='❌ Geolocation not supported by your browser';return;}
+  btn.textContent='📍 Detecting…';btn.disabled=true;
+  status.textContent='Fetching your location…';
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const {latitude,longitude}=pos.coords;
+    const mapsLink=`https://www.google.com/maps?q=${latitude},${longitude}`;
+    document.getElementById('custMaps').value=mapsLink;
+    btn.textContent='✅ Location Detected!';btn.disabled=false;
+    status.textContent=`📍 Lat: ${latitude.toFixed(4)}, Lng: ${longitude.toFixed(4)}`;
+    toast('📍 Location detected!');
+  },err=>{
+    btn.textContent='📍 Detect My Location Automatically';btn.disabled=false;
+    status.textContent='❌ Could not detect location. Please paste your Google Maps link.';
+  },{timeout:10000});
+}
+
+// =================== CHECKOUT ===================
+function openCheckout(){
+  if(!ordersOn){toast('⏸ Orders are currently paused. Please call us!');return;}
+  if(!cart.length){toast('Cart is empty!');return;}
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  if(subtotal<MIN_ORDER){toast(`⚠️ Minimum order is ₹${MIN_ORDER}`);return;}
+  closeCart();
+  document.getElementById('checkoutModal').classList.add('open');
+  renderOrderSum();
+  setTimeout(()=>document.getElementById('delivWarn').classList.add('show'),700);
+}
+
+function renderOrderSum(){
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discount=appliedCoupon?couponDiscountForCart(appliedCoupon):0;
+  appliedDiscount=discount;
+  const finalTotal=Math.max(0,subtotal-discount);
+
+  const minWarn=document.getElementById('minOrderWarn');
+  const placeBtn=document.getElementById('placeBtn');
+  if(subtotal<MIN_ORDER){
+    minWarn.classList.add('show');
+    placeBtn.disabled=true;
+  }else{
+    minWarn.classList.remove('show');
+    placeBtn.disabled=false;
+  }
+
+  document.getElementById('orderSum').innerHTML=
+    cart.map(i=>`<div class="sum-row"><span>${i.name} x${i.qty}</span><span>Rs.${i.price*i.qty}</span></div>`).join('')+
+    `<div class="sum-total"><span>Subtotal</span><span>Rs.${subtotal}</span></div>`+
+    (discount>0?`<div class="sum-total" style="color:var(--green)"><span>Discount (${appliedCouponCode})</span><span>-Rs.${discount}</span></div>`:'')+
+    `<div class="sum-total"><span>Payable</span><span>Rs.${finalTotal}</span></div>`;
+
+  const offers=document.getElementById('couponOffers');
+  if(offers && offers.style.display && offers.style.display!=='none') renderCouponOffers();
+}
+
+async function placeOrder(){
+
+  const latest = await loadFromCloud();
+
+  if(!latest || !latest.ordersOn){
+    toast('⏸ Orders are paused. Please call us directly!');
+    return;
+  }
+  latest.orders=Array.isArray(latest.orders)?latest.orders:[];
+
+  const name=document.getElementById('custName').value.trim();
+  const phone=document.getElementById('custPhone').value.trim();
+  const addr=document.getElementById('custAddr').value.trim();
+  const note=(document.getElementById('custNote')?.value||'').trim();
+  const maps=document.getElementById('custMaps').value.trim();
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+
+  if(!name){toast('Please enter your name');return;}
+  if(!/^\d{10}$/.test(phone)){toast('Enter a valid 10-digit number');return;}
+  if(!addr){toast('Please enter your delivery address');return;}
+  if(subtotal<MIN_ORDER){toast(`⚠️ Minimum order is ₹${MIN_ORDER}`);return;}
+  let couponCode='';
+  let discount=0;
+  let finalTotal=subtotal;
+  let couponLocalKey='';
+  if(appliedCouponCode){
+    await ensureCouponsInState(latest);
+    const c=(latest.coupons||[]).find(x=>normCode(x.code)===appliedCouponCode && x.active!==false);
+    if(!c){toast('Coupon invalid. Please remove it and try again.');return;}
+    if(isExpired(c)){toast('Coupon expired. Please remove it and try again.');return;}
+    if(c.type==='percent_combos' && cartComboSubtotal()<=0){toast('Coupon works on combos only.');return;}
+    if(subtotal < (c.minSubtotal||0)){toast(`Coupon needs minimum Rs.${c.minSubtotal}`);return;}
+    if(c.type==='free_item'){
+      const freeId=String(c.freeItemId||'').trim();
+      const freeItem=freeId?getItem(freeId):null;
+      if(!freeItem){toast('Free item coupon not configured.');return;}
+      const freebieId=`free_${appliedCouponCode}_${freeId}`;
+      const already=cart.find(i=>String(i.id)===freebieId && i.freebie);
+      if(!already){
+        const addons=[];
+        try{
+          if(freeItem.hasMojito) addons.push('Mojito: Surprise (Best Seller)');
+        }catch(e){}
+        cart.push({id:freebieId,refId:freeId,qty:1,name:(freeItem.name||'Free Item')+' (FREE)',price:0,addons,freebie:true,freebieOf:appliedCouponCode});
+      }
+    }
+
+    couponLocalKey=`zorko_coupon_used_${appliedCouponCode}_${phone}`;
+    if(localStorage.getItem(couponLocalKey)==='1'){toast('Coupon already used on this phone.');return;}
+    const usage=(latest.couponUsage&&latest.couponUsage[appliedCouponCode])?latest.couponUsage[appliedCouponCode]:{};
+    if(c.onePerCustomer!==false && usage.usedPhones && usage.usedPhones[phone]){toast('Coupon already used by this phone.');return;}
+    if(c.maxTotalUses!=null && Number(usage.totalUsed||0) >= Number(c.maxTotalUses)){toast('Coupon usage limit reached.');return;}
+    if(c.firstOrderOnly){
+      const hasOrder=(Array.isArray(latest.orders)?latest.orders:[]).some(o=>String(o.phone||'')===phone);
+      if(hasOrder){toast('Coupon is for first order only.');return;}
+    }
+
+    discount=couponDiscountForCart(c);
+    finalTotal=Math.max(0,subtotal-discount);
+    couponCode=appliedCouponCode;
+
+    latest.couponUsage=latest.couponUsage&&typeof latest.couponUsage==='object'?latest.couponUsage:{};
+    const u=latest.couponUsage[couponCode]&&typeof latest.couponUsage[couponCode]==='object'?latest.couponUsage[couponCode]:{};
+    u.totalUsed=Number(u.totalUsed||0)+1;
+    u.usedPhones=u.usedPhones&&typeof u.usedPhones==='object'?u.usedPhones:{};
+    u.usedPhones[phone]=Date.now();
+    latest.couponUsage[couponCode]=u;
+  }
+
+  const oid='ZRK'+Date.now().toString().slice(-6);
+
+  const newOrder={
+    id:oid,
+    name,phone,addr,note,maps,
+    items:[...cart],
+    subtotal,
+    discount,
+    couponCode,
+    total: finalTotal,
+    status:'new',
+    time:new Date().toLocaleString('en-IN'),
+    createdAt: Date.now()
+  };
+
+  // 🔴 PUSH TO CLOUD (REAL FIX)
+  latest.orders.push(newOrder);
+  const savedOk=await saveToCloud(latest);
+  if(!savedOk){toast('❌ Could not save order. Please try again.');return;}
+  if(couponLocalKey) try{localStorage.setItem(couponLocalKey,'1');}catch(e){}
+
+  // WhatsApp message (keep your system)
+  const itemLines=cart.map(i=>`• ${i.name} x${i.qty} = Rs.${i.price*i.qty}${i.addons&&i.addons.length?' ('+i.addons.join(', ')+')':''}`).join('\n');
+
+  const msg=
+`*ZORKO BIHAR SHARIF — NEW ORDER*
+━━━━━━━━━━━━━━━━━━━━
+*Order ID:* #${oid}
+*Time:* ${new Date().toLocaleString('en-IN',{hour12:true})}
+━━━━━━━━━━━━━━━━━━━━
+*CUSTOMER*
+Name: ${name}
+Phone: ${phone}
+Address: ${addr}${maps?'\nLocation: '+maps:''}
+${note?`\nNotes: ${note}`:''}
+━━━━━━━━━━━━━━━━━━━━
+*ORDER ITEMS*
+${itemLines}
+━━━━━━━━━━━━━━━━━━━━
+*SUBTOTAL: Rs.${subtotal}*
+${discount>0?`*DISCOUNT (${couponCode}): -Rs.${discount}*`+'\n':''}*PAYABLE: Rs.${finalTotal}*
+Payment: UPI
+━━━━━━━━━━━━━━━━━━━━
+Please confirm this order.`;
+
+  window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
+
+  // UI cleanup
+  document.getElementById('modalBody').innerHTML=`<div class="success-screen">
+    <span class="si">🎉</span>
+    <h2>Order Sent!</h2>
+    <p>Your order <strong>#${oid}</strong> has been sent.</p>
+  </div>`;
+
+  cart=[];
+  clearCoupon();
+  updateCartUI();
+}
+
+// =================== SEARCH ===================
+function handleSearch(q){
+  const query=q.trim().toLowerCase();
+  const cl=document.getElementById('sClear');
+  cl.style.display=query?'flex':'none';
+  const sr=document.getElementById('srResults'),all=document.getElementById('allSections');
+  if(!query){sr.classList.remove('show');all.style.display='';return;}
+  sr.classList.add('show');all.style.display='none';
+  const allItems=
+    Object.entries(MENU).flatMap(([cat,items])=>Array.isArray(items)?items.filter(i=>i.id&&!hiddenIds.has(i.id)).map(i=>({...i,cat})):[])
+    .concat(Object.entries(customMenu||{}).flatMap(([cat,items])=>Array.isArray(items)?items.filter(i=>i.id&&!hiddenIds.has(i.id)).map(i=>({...i,cat})):[]));
+  const matched=allItems.filter(i=>i.name.toLowerCase().includes(query)||(i.desc&&i.desc.toLowerCase().includes(query)));
+  document.getElementById('srTitle').textContent=`Results for "${q}" (${matched.length})`;
+  const grid=document.getElementById('srGrid');
+  if(!matched.length){grid.innerHTML='<div class="no-res" style="grid-column:1/-1"><span class="no-res-icon">😔</span><p style="font-size:14px;font-weight:700">No items found for "'+q+'"</p></div>';return;}
+  grid.innerHTML=matched.map(item=>{
+    const imgSrc=dishImages[item.id];
+    return`<div class="menu-card"><div class="menu-img">${imgSrc?`<img src="${imgSrc}" alt="${item.name}" loading="lazy">`:item.emoji}</div><div class="menu-body">
+      ${item.bs?'<span class="badge-bs">⭐ Best Seller</span>':''}
+      ${item.spicy?'<span class="badge-spicy">🌶 Spicy</span>':''}
+      <div class="menu-name">${item.name}</div>
+      <div class="menu-desc">${item.desc||''}</div>
+      <div class="menu-foot">
+        <span class="menu-price">₹${item.price}</span>
+        <button class="add-btn" onclick="addItem('${item.id}','${item.cat}')">+</button>
+      </div></div></div>`;}).join('');
+}
+function clearSearch(){document.getElementById('searchInput').value='';handleSearch('');}
+
+// =================== ADMIN ===================
+function openAdmin(e){if(e)e.preventDefault();document.getElementById('adminOverlay').classList.add('open');}
+function closeAdmin(){document.getElementById('adminOverlay').classList.remove('open');}
+function doAdminLogin(){
+  if(document.getElementById('adminPass').value===ADMIN_PASS){
+    document.getElementById('adminLogin').style.display='none';
+    document.getElementById('adminDash').style.display='block';
+    renderAOrders();renderAMenu();renderAPrices();renderACoupons();renderAMovers();renderAmbienceAdmin();renderCloudSettings();
+    // Auto refresh orders while admin is open (needed for alerts)
+    if(!window._orderRefreshTimer)window._orderRefreshTimer=setInterval(async()=>{
+      try{
+        if(!document.getElementById('adminOverlay').classList.contains('open')) return;
+        if(document.getElementById('aOrders').style.display!=='none'){
+          await renderAOrders();
+          return;
+        }
+        await loadOrders();
+        maybeNotifyNewOrders(orders,orderTs);
+      }catch(e){}
+    },8000);
+  }else{toast('❌ Wrong password!');document.getElementById('adminPass').style.borderColor='var(--red)';setTimeout(()=>document.getElementById('adminPass').style.borderColor='',1500);}
+}
+function aTab(t,btn){
+  document.querySelectorAll('.admin-tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+  ['aOrders','aMenu','aPrices','aCoupons','aMovers','aImages','aSettings'].forEach(id=>document.getElementById(id).style.display='none');
+  const m={orders:'aOrders',menu:'aMenu',prices:'aPrices',coupons:'aCoupons',movers:'aMovers',images:'aImages',settings:'aSettings'};
+  document.getElementById(m[t]).style.display='block';
+  if(t==='images')renderAmbienceAdmin();
+  if(t==='orders')renderAOrders();
+  if(t==='coupons')renderACoupons();
+  if(t==='settings')renderCloudSettings();
+}
+
+function setOrderFilters(){
+  const r=document.getElementById('orderRange')?.value||'all';
+  const s=document.getElementById('orderStatus')?.value||'all';
+  localStorage.setItem('zorko_order_range',r);
+  localStorage.setItem('zorko_order_status',s);
+  renderAOrders();
+}
+
+function playOrderSound(){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator();
+    const g=ctx.createGain();
+    o.type='sine';
+    o.frequency.value=880;
+    g.gain.value=0.001;
+    o.connect(g); g.connect(ctx.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.2,ctx.currentTime+0.01);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.35);
+    o.stop(ctx.currentTime+0.4);
+    setTimeout(()=>{try{ctx.close();}catch(e){}},600);
+  }catch(e){}
+}
+
+function enableOrderAlerts(){
+  localStorage.setItem('zorko_alerts_on','1');
+  localStorage.setItem('zorko_last_order_alert_ts','0');
+  playOrderSound();
+  if(!('Notification' in window)){toast('Browser notifications not supported');return;}
+  if(Notification.permission==='granted'){toast('Notifications enabled');return;}
+  Notification.requestPermission().then(p=>{
+    toast(p==='granted'?'Notifications enabled':'Notifications blocked');
+  }).catch(()=>toast('Notifications blocked'));
+}
+
+function orderTs(o){
+  if(o&&typeof o.createdAt==='number') return o.createdAt;
+  try{
+    const raw=String(o.time||'');
+    const parts=raw.split(',');
+    const datePart=(parts[0]||'').trim();
+    const timePart=(parts[1]||'').trim();
+    const d=datePart.split('/');
+    if(d.length!==3) return 0;
+    const day=parseInt(d[0],10), mon=parseInt(d[1],10)-1, year=parseInt(d[2],10);
+    let hh=0, mm=0, ss=0;
+    const m=timePart.match(/(\\d+):(\\d+):(\\d+)\\s*(AM|PM)/i);
+    if(m){
+      hh=parseInt(m[1],10); mm=parseInt(m[2],10); ss=parseInt(m[3],10);
+      const ap=m[4].toUpperCase();
+      if(ap==='PM' && hh<12) hh+=12;
+      if(ap==='AM' && hh===12) hh=0;
+    }
+    return new Date(year,mon,day,hh,mm,ss).getTime();
+  }catch(e){return 0;}
+}
+
+function maybeNotifyNewOrders(allOrders,getTs){
+  try{
+    if(localStorage.getItem('zorko_alerts_on')!=='1') return;
+    const last=parseInt(localStorage.getItem('zorko_last_order_alert_ts')||'0',10);
+    const news=(allOrders||[]).filter(o=>String(o.status||'')==='new' && (getTs?getTs(o):0)>last);
+    if(!news.length) return;
+    const maxTs=Math.max(...news.map(o=>getTs?getTs(o):0));
+    localStorage.setItem('zorko_last_order_alert_ts',String(maxTs));
+    playOrderSound();
+    if('Notification' in window && Notification.permission==='granted'){
+      const o=news[0];
+      new Notification('New Zorko order', { body: `#${o.id} - ${o.name} - Rs.${o.total}` });
+    }
+  }catch(e){}
+}
+async function renderAOrders(){
+  const el=document.getElementById('aOrders');
+  el.innerHTML='<div style="text-align:center;padding:2rem;color:var(--muted);font-weight:600">🔄 Loading orders...</div>';
+  await loadOrders();
+  const range=(localStorage.getItem('zorko_order_range')||'all');
+  const statusF=(localStorage.getItem('zorko_order_status')||'all');
+  const now=new Date();
+
+  function getOrderTs(o){ return orderTs(o); }
+
+  function rangeStartMs(){
+    if(range==='today') return new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+    if(range==='week') return new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime()-(6*24*60*60*1000);
+    if(range==='month') return new Date(now.getFullYear(),now.getMonth(),1).getTime();
+    return 0;
+  }
+
+  const startMs=rangeStartMs();
+  const filtered=orders.filter(o=>{
+    if(statusF!=='all' && String(o.status||'')!==statusF) return false;
+    if(range!=='all' && getOrderTs(o)<startMs) return false;
+    return true;
+  });
+  const sorted=[...filtered].sort((a,b)=>getOrderTs(b)-getOrderTs(a));
+  maybeNotifyNewOrders(orders,getOrderTs);
+  const statusColor={new:'#E8291C',confirmed:'#2563eb',preparing:'#d97706','out for delivery':'#7c3aed',delivered:'#16a34a',declined:'#6b7280'};
+  const headerHtml=`
+  <div style="background:${ordersOn?'#f0fff4':'#fff0f0'};border:2.5px solid ${ordersOn?'var(--green)':'var(--red)'};border-radius:16px;padding:16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div>
+      <div style="font-weight:900;font-size:15px;color:${ordersOn?'var(--green)':'var(--red)'}">${ordersOn?'✅ Accepting Orders':'⏸ Orders Paused'}</div>
+      <div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:2px">${ordersOn?'Customers can place orders right now':'Customers see a "Paused" message'}</div>
+    </div>
+    <label class="tswitch"><input type="checkbox" id="ordersToggle" ${ordersOn?'checked':''} onchange="aTgl('orders',this)"><span class="tslider"></span></label>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+    <span style="font-weight:900;font-size:14px">?? Orders: ${sorted.length} <span style="color:var(--muted);font-weight:700">(All: ${orders.length})</span></span>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <select id="orderRange" onchange="setOrderFilters()" style="padding:7px 10px;border-radius:10px;border:1.5px solid var(--border);font-family:Outfit,sans-serif;font-weight:700;font-size:12px;background:var(--cream)">
+        <option value="all" ${range==='all'?'selected':''}>All</option>
+        <option value="today" ${range==='today'?'selected':''}>Today</option>
+        <option value="week" ${range==='week'?'selected':''}>This Week</option>
+        <option value="month" ${range==='month'?'selected':''}>This Month</option>
+      </select>
+      <select id="orderStatus" onchange="setOrderFilters()" style="padding:7px 10px;border-radius:10px;border:1.5px solid var(--border);font-family:Outfit,sans-serif;font-weight:700;font-size:12px;background:var(--cream)">
+        <option value="all" ${statusF==='all'?'selected':''}>All Status</option>
+        <option value="new" ${statusF==='new'?'selected':''}>New</option>
+        <option value="confirmed" ${statusF==='confirmed'?'selected':''}>Accepted</option>
+        <option value="declined" ${statusF==='declined'?'selected':''}>Declined</option>
+        <option value="preparing" ${statusF==='preparing'?'selected':''}>Preparing</option>
+        <option value="out for delivery" ${statusF==='out for delivery'?'selected':''}>Out</option>
+        <option value="delivered" ${statusF==='delivered'?'selected':''}>Delivered</option>
+      </select>
+      <button onclick="renderAOrders()" style="background:var(--dark);color:#fff;border:none;padding:7px 14px;border-radius:9px;font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer">?? Refresh</button>
+    </div>
+  </div>`;
+  if(!orders.length){el.innerHTML=headerHtml+'<div style="text-align:center;padding:2rem;color:var(--muted);font-weight:600">?? No orders yet.</div>';return;}
+  if(!sorted.length){el.innerHTML=headerHtml+'<div style="text-align:center;padding:2rem;color:var(--muted);font-weight:600">No orders match this filter.</div>';return;}
+  el.innerHTML=headerHtml+sorted.map(o=>`<div class="order-card ${o.status}" style="margin-bottom:14px;border:2px solid ${statusColor[o.status]||'#ddd'}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:6px">
+      <div><strong style="font-weight:900;font-size:15px">#${o.id}</strong>${o.time?`<span style="font-size:11px;color:var(--muted);margin-left:8px;font-weight:600">${o.time}</span>`:''}</div>
+      <span style="font-size:11px;font-weight:900;text-transform:uppercase;background:${statusColor[o.status]||'#aaa'};color:#fff;padding:4px 12px;border-radius:20px">${o.status}</span>
+    </div>
+    <div style="font-size:13px;margin-bottom:4px;font-weight:800">👤 ${o.name} &nbsp;·&nbsp; 📞 ${o.phone}</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600">📍 ${o.addr}</div>
+    ${o.note?`<div style="font-size:12px;color:#111827;margin-bottom:6px;font-weight:700;background:#eef2ff;border-radius:8px;padding:8px 10px">📝 ${String(o.note).replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`:''}
+    ${o.maps?`<div style="font-size:12px;margin-bottom:6px"><a href="${o.maps}" target="_blank" style="color:var(--red);font-weight:700">🗺 View on Google Maps</a></div>`:''}
+    <div style="font-size:12.5px;margin-bottom:8px;font-weight:600;background:#fff8f0;border-radius:8px;padding:8px 10px;line-height:1.8">${o.items.map(i=>`🍽 ${i.name} ×${i.qty} = ₹${i.price*i.qty}${i.addons&&i.addons.length?' <span style="color:var(--muted);font-size:11px">('+i.addons.join(', ')+')</span>':''}`).join('<br>')}</div>
+    <div style="font-weight:900;color:var(--red);font-size:1.1rem;margin-bottom:10px">💰 Total: ₹${o.total} &nbsp;·&nbsp; UPI</div>
+    <div class="order-actions">
+<button class="oab confirm" onclick="updOS('${o.id}','confirmed')">✅ Accept</button>
+<button class="oab" style="background:#6b7280" onclick="updOS('${o.id}','declined')">✖ Decline</button>
+      <button class="oab prep" onclick="updOS('${o.id}','preparing')">👨‍🍳 Preparing</button>
+      <button class="oab deliv" onclick="updOS('${o.id}','out for delivery')">🛵 Out for Delivery</button>
+      <button class="oab done" onclick="updOS('${o.id}','delivered')">✓ Delivered</button>
+    </div></div>`).join('');
+}
+function updOS(id,status){
+  const o=orders.find(x=>x.id===id);if(!o)return;o.status=status;saveOrders();
+  const msgs={
+    declined:`Order Update\nHi ${o.name}! Your order #${o.id} was declined. Please call us for help.`,
+    confirmed:`✅ *Zorko Order Confirmed!*\nHi ${o.name}! Your order *#${o.id}* is confirmed. We'll start preparing shortly! 🍔`,
+    preparing:`👨‍🍳 *Zorko Update!*\nYour order *#${o.id}* is being freshly prepared right now! 🔥`,
+    'out for delivery':`🛵 *On the Way!*\nYour Zorko order *#${o.id}* is out for delivery! Arriving soon. 🚀`,
+    delivered:`✅ *Delivered!*\nYour Zorko order *#${o.id}* has been delivered! Hope you loved it! 😊\nRate us on Google ⭐ ${ZORKO_MAPS}`
+  };
+  if(msgs[status])window.open('https://wa.me/91'+o.phone+'?text='+encodeURIComponent(msgs[status]),'_blank');
+  renderAOrders();toast('Status updated: '+status);
+}
+function renderAMenu(){
+  const baseItems=Object.values(MENU).flat().filter(i=>i&&i.id&&!hiddenIds.has(i.id));
+  const extraItems=Object.values(customMenu||{}).flat().filter(i=>i&&i.id&&!hiddenIds.has(i.id));
+  const items=baseItems.concat(extraItems);
+  const customCats=Array.isArray(customCategories)?customCategories:[];
+  const catOptions=
+    Object.keys(MENU).filter(c=>c!=='combos').map(c=>`<option value="${c}">${c.charAt(0).toUpperCase()+c.slice(1)}</option>`).join('')+
+    (customCats.length?`<option disabled>────────</option>`:'')+
+    customCats.map(c=>`<option value="${c.id}">${(c.emoji?c.emoji+' ':'')}${c.name||'Category'}</option>`).join('');
+  document.getElementById('aMenu').innerHTML=`
+  <p style="font-size:12px;color:var(--muted);margin-bottom:1rem;font-weight:600">Toggle items on/off. You can also add new items or remove existing ones.</p>
+  <div style="background:#fff7ed;border:2px solid var(--amber);border-radius:14px;padding:14px;margin-bottom:1.2rem">
+    <p style="font-weight:900;font-size:13px;margin-bottom:10px;color:#7a3a00">➕ Add New Category</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <input id="newCatName" placeholder="Category name" style="padding:8px 10px;border:2px solid var(--border);border-radius:9px;font-family:Outfit,sans-serif;font-size:13px;font-weight:600;outline:none">
+      <input id="newCatEmoji" placeholder="Emoji e.g. 🍗" style="padding:8px 10px;border:2px solid var(--border);border-radius:9px;font-family:Outfit,sans-serif;font-size:13px;font-weight:600;outline:none">
+    </div>
+    <button onclick="addNewCategory()" style="background:var(--amber);color:var(--dark);border:none;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:900;cursor:pointer;font-family:Outfit,sans-serif;width:100%">Add Category</button>
+  </div>
+  ${(customCats&&customCats.length)?`
+  <div style="background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px;margin-bottom:1.2rem">
+    <p style="font-weight:900;font-size:13px;margin-bottom:10px;color:var(--dark)">✏️ Edit Categories</p>
+    <p style="font-size:11px;color:var(--muted);font-weight:700;margin-bottom:10px;line-height:1.4">Only custom categories you created show here. Default categories (Burgers, Pizza, etc.) are fixed.</p>
+    ${customCats.map(c=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;border:1px solid var(--border);border-radius:12px;padding:10px;background:#fffdf9">
+        <div style="font-weight:900;font-size:13px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(c.emoji||'✨')} ${c.name||'Category'}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button onclick="renameCategoryPrompt('${c.id}')" style="background:#111827;color:#fff;border:none;padding:8px 10px;border-radius:10px;font-size:12px;font-weight:900;cursor:pointer;font-family:Outfit,sans-serif">Rename</button>
+          <button onclick="deleteCategory('${c.id}')" style="background:var(--red);color:#fff;border:none;padding:8px 10px;border-radius:10px;font-size:12px;font-weight:900;cursor:pointer;font-family:Outfit,sans-serif">Delete</button>
+        </div>
+      </div>`).join('')}
+    <p style="font-size:11px;color:var(--muted);font-weight:700;line-height:1.4;margin-top:6px">Tip: After renaming, refresh customer devices once if their browser cached the old tabs.</p>
+  </div>`:''}
+  <div style="background:#f0fff4;border:2px solid var(--green);border-radius:14px;padding:14px;margin-bottom:1.2rem">
+    <p style="font-weight:900;font-size:13px;margin-bottom:10px;color:var(--green)">➕ Add New Item</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <input id="newItemName" placeholder="Item name" style="padding:8px 10px;border:2px solid var(--border);border-radius:9px;font-family:Outfit,sans-serif;font-size:13px;font-weight:600;outline:none">
+      <input id="newItemPrice" type="number" placeholder="Price (₹)" min="1" style="padding:8px 10px;border:2px solid var(--border);border-radius:9px;font-family:Outfit,sans-serif;font-size:13px;font-weight:600;outline:none">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <input id="newItemEmoji" placeholder="Emoji e.g. 🍔" style="padding:8px 10px;border:2px solid var(--border);border-radius:9px;font-family:Outfit,sans-serif;font-size:13px;font-weight:600;outline:none">
+      <select id="newItemCat" style="padding:8px 10px;border:2px solid var(--border);border-radius:9px;font-family:Outfit,sans-serif;font-size:13px;font-weight:600;outline:none;background:var(--cream)">${catOptions}</select>
+    </div>
+    <input id="newItemDesc" placeholder="Description (optional)" style="width:100%;padding:8px 10px;border:2px solid var(--border);border-radius:9px;font-family:Outfit,sans-serif;font-size:13px;font-weight:600;outline:none;margin-bottom:8px">
+    <button onclick="addNewItem()" style="background:var(--green);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:Outfit,sans-serif;width:100%">➕ Add Item to Menu</button>
+  </div>
+  `+items.map(i=>`<div class="adm-item">
+    <span class="adm-name">${i.emoji} ${i.name} <span style="color:var(--red);font-weight:900">₹${i.price}</span></span>
+    <div style="display:flex;gap:6px;align-items:center">
+      <button onclick="editItemPrompt('${i.id}')" style="background:#111827;color:#fff;border:none;width:44px;height:28px;border-radius:7px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:900" title="Edit">Edit</button>
+      <span style="font-size:10px;font-weight:800;color:${disabledIds.has(i.id)?'var(--red)':'var(--green)'}">${disabledIds.has(i.id)?'OUT':'IN STOCK'}</span>
+      <label class="tswitch"><input type="checkbox" ${disabledIds.has(i.id)?'':'checked'} onchange="tglItem('${i.id}',this)"><span class="tslider"></span></label>
+      <button onclick="removeItem('${i.id}')" style="background:var(--red);color:#fff;border:none;width:28px;height:28px;border-radius:7px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:900" title="Remove">🗑</button>
+    </div>
+  </div>`).join('');
+}
+
+function editItemPrompt(id){
+  const it=getItem(id);
+  if(!it){toast('Item not found');return;}
+  const name=prompt('Item name:', it.name||'');
+  if(name==null) return;
+  const nm=String(name||'').trim();
+  if(!nm){toast('Enter item name');return;}
+  const desc=prompt('Item description:', (it.desc||'')) ;
+  // allow skipping description without canceling the whole edit
+  const dsc=(desc==null)?(it.desc||''):String(desc||'');
+  const emoji=prompt('Item emoji (optional):', it.emoji||'') ;
+  const em=(emoji==null)?it.emoji:String(emoji||'').trim()||it.emoji;
+
+  if(!itemOverrides||typeof itemOverrides!=='object') itemOverrides={};
+  itemOverrides[id]={name:nm, desc:dsc, emoji:em};
+  try{localStorage.setItem('zorko_item_overrides',JSON.stringify(itemOverrides));}catch(e){}
+  applyItemOverrides();
+  saveStateToSheet();
+  renderAMenu();renderAll();renderDishImgGrid();
+  toast('✅ Item updated');
+}
+
+function addNewCategory(){
+  const name=document.getElementById('newCatName')?.value?.trim();
+  const emoji=document.getElementById('newCatEmoji')?.value?.trim()||'✨';
+  if(!name){toast('Enter category name');return;}
+  const id='cat_'+Date.now();
+  customCategories=Array.isArray(customCategories)?customCategories:[];
+  customCategories.push({id,name,emoji});
+  if(!customMenu) customMenu={};
+  if(!customMenu[id]) customMenu[id]=[];
+  try{localStorage.setItem('zorko_custom_categories',JSON.stringify(customCategories));}catch(e){}
+  try{localStorage.setItem('zorko_custom_menu',JSON.stringify(customMenu));}catch(e){}
+  saveStateToSheet();
+  renderAMenu();renderAll();
+  toast('✅ Category added');
+  setTimeout(()=>{try{const sid=customSectionId(id);const el=document.getElementById(sid);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}},350);
+}
+
+function renameCategoryPrompt(id){
+  customCategories=Array.isArray(customCategories)?customCategories:[];
+  const c=customCategories.find(x=>String(x.id)===String(id));
+  if(!c){toast('Category not found');return;}
+  const name=prompt('Category name:', c.name||'');
+  if(name==null) return;
+  const nm=String(name||'').trim();
+  if(!nm){toast('Enter category name');return;}
+  const emoji=prompt('Category emoji (optional):', c.emoji||'') || c.emoji || '✨';
+  c.name=nm;
+  c.emoji=String(emoji||'').trim()||'✨';
+  try{localStorage.setItem('zorko_custom_categories',JSON.stringify(customCategories));}catch(e){}
+  saveStateToSheet();
+  renderAMenu();renderAll();
+  toast('✅ Category updated');
+}
+
+function deleteCategory(id){
+  if(!confirm('Delete this category? Items inside will also be removed.')) return;
+  customCategories=Array.isArray(customCategories)?customCategories:[];
+  customCategories=customCategories.filter(c=>String(c.id)!==String(id));
+  if(customMenu && customMenu[id]) delete customMenu[id];
+  try{localStorage.setItem('zorko_custom_categories',JSON.stringify(customCategories));}catch(e){}
+  try{localStorage.setItem('zorko_custom_menu',JSON.stringify(customMenu||{}));}catch(e){}
+  saveStateToSheet();
+  renderAMenu();renderAll();
+  toast('Category deleted');
+}
+function addNewItem(){
+  const name=document.getElementById('newItemName').value.trim();
+  const price=parseInt(document.getElementById('newItemPrice').value);
+  const emoji=document.getElementById('newItemEmoji').value.trim()||'🍽';
+  const cat=document.getElementById('newItemCat').value;
+  const desc=document.getElementById('newItemDesc').value.trim();
+  if(!name){toast('Enter item name');return;}
+  if(!price||price<1){toast('Enter valid price');return;}
+  const id=cat.charAt(0)+'custom_'+Date.now();
+  const item={id,name,price,emoji,desc};
+  if(!customMenu[cat]) customMenu[cat]=[];
+  customMenu[cat].push(item);
+  try{localStorage.setItem('zorko_custom_menu',JSON.stringify(customMenu));}catch(e){}
+  saveStateToSheet();
+  renderAMenu();renderAll();toast('✅ '+name+' added!');
+}
+function removeItem(id){
+  if(!confirm('Remove this item from menu?'))return;
+  hiddenIds.add(id);
+  disabledIds.delete(id);
+  for(const cat of Object.keys(MENU)){
+    if(Array.isArray(MENU[cat])){MENU[cat]=MENU[cat].filter(i=>i.id!==id);}
+  }
+  for(const cat of Object.keys(customMenu||{})){
+    if(Array.isArray(customMenu[cat])) customMenu[cat]=customMenu[cat].filter(i=>i.id!==id);
+  }
+  saveStateToSheet();
+  renderAMenu();renderAll();toast('Item deleted');
+}
+function tglItem(id,cb){
+  if(cb.checked)disabledIds.delete(id);else disabledIds.add(id);
+  const c=document.getElementById('card_'+id);const m=document.getElementById('mover_'+id);
+  if(c)c.style.opacity=cb.checked?'1':'0.4';if(m)m.style.opacity=cb.checked?'1':'0.4';
+  saveStateToSheet();
+  toast(cb.checked?'✅ Item enabled':'❌ Item disabled');
+}
+function renderAPrices(){
+  const items=Object.values(MENU).flat().concat(Object.values(customMenu||{}).flat()).filter(i=>i&&i.id&&!hiddenIds.has(i.id));
+  document.getElementById('aPrices').innerHTML='<p style="font-size:12px;color:var(--muted);margin-bottom:1rem;font-weight:600">Edit price and click Save.</p>'+items.map(i=>`<div class="adm-item"><span class="adm-name">${i.emoji} ${i.name}</span><div style="display:flex;align-items:center;gap:6px"><span style="color:var(--muted);font-size:12px;font-weight:700">₹</span><input type="number" class="price-input" id="pi_${i.id}" value="${i.price}" min="1"><button class="save-btn" onclick="savePrice('${i.id}')">Save</button></div></div>`).join('');
+}
+function savePrice(id){
+  const input=document.getElementById('pi_'+id);const np=parseInt(input.value);
+  if(!np||np<1){toast('Invalid price');return;}
+  for(const cat of Object.values(MENU)){if(!Array.isArray(cat))continue;const i=cat.find(x=>x.id===id);if(i){i.price=np;break;}}
+  for(const items of Object.values(customMenu||{})){if(!Array.isArray(items))continue;const i=items.find(x=>x.id===id);if(i){i.price=np;break;}}
+  if(!priceOverrides||typeof priceOverrides!=='object') priceOverrides={};
+  priceOverrides[id]=np;
+  try{localStorage.setItem('zorko_price_overrides',JSON.stringify(priceOverrides));}catch(e){}
+  saveStateToSheet();
+  const pe=document.getElementById('pr_'+id);if(pe)pe.textContent='₹'+np;
+  toast('✅ Price updated: ₹'+np);input.style.borderColor='var(--green)';setTimeout(()=>input.style.borderColor='',1500);
+}
+
+async function renderACoupons(){
+  const el=document.getElementById('aCoupons');
+  if(!el) return;
+  el.innerHTML='<div style="text-align:center;padding:2rem;color:var(--muted);font-weight:600">Loading coupons...</div>';
+  const state=await cloudLoad();
+  if(!state){el.innerHTML='<p style="color:var(--red);font-weight:900">Cloud not connected.</p>';return;}
+  await ensureCouponsInState(state);
+  el.innerHTML=`
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px">
+      <p style="font-weight:900;margin-bottom:8px">Coupons (JSON)</p>
+      <p style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px">Edit coupons and click Save. Fields: code, active, type, value, minSubtotal, onePerCustomer, firstOrderOnly, maxTotalUses, expiry.</p>
+      <textarea id="couponJson" class="form-input" style="min-height:240px;font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.4;background:#fff" spellcheck="false"></textarea>
+      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+        <button onclick="saveCouponsJson()" style="background:var(--green);color:#fff;border:none;padding:10px 16px;border-radius:10px;font-weight:900;cursor:pointer;font-family:Outfit,sans-serif">Save Coupons</button>
+        <button onclick="renderACoupons()" style="background:var(--dark);color:#fff;border:none;padding:10px 16px;border-radius:10px;font-weight:900;cursor:pointer;font-family:Outfit,sans-serif">Reload</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('couponJson').value=JSON.stringify(state.coupons||[],null,2);
+}
+
+async function saveCouponsJson(){
+  const state=await cloudLoad(); if(!state){toast('Cloud not connected');return;}
+  const raw=document.getElementById('couponJson')?.value||'[]';
+  let parsed=null;
+  try{parsed=JSON.parse(raw);}catch(e){toast('Invalid JSON');return;}
+  if(!Array.isArray(parsed)){toast('Coupons must be an array');return;}
+  state.coupons=parsed.map(c=>({
+    code:normCode(c.code),
+    active:c.active!==false,
+    type:c.type||'flat',
+    value:Number(c.value||0),
+    minSubtotal:Number(c.minSubtotal||0),
+    freeItemId:c.freeItemId||null,
+    onePerCustomer:c.onePerCustomer!==false,
+    firstOrderOnly:!!c.firstOrderOnly,
+    maxTotalUses:(c.maxTotalUses==null||c.maxTotalUses==='')?null:Number(c.maxTotalUses),
+    expiry:c.expiry||null
+  })).filter(c=>c.code);
+  await cloudSave(state);
+  toast('Coupons saved');
+  renderACoupons();
+}
+function renderAMovers(){
+  const allItems=Object.values(MENU).flat().concat(Object.values(customMenu||{}).flat()).filter(i=>i&&i.id&&!hiddenIds.has(i.id));
+  document.getElementById('aMovers').innerHTML=`
+    <p style="font-size:12px;color:var(--muted);margin-bottom:1rem;font-weight:600">Check/uncheck items to show them in "Today's Big Movers" section.</p>
+    ${allItems.map(i=>`<div class="mover-edit-row">
+      <span class="mover-edit-name">${i.emoji} ${i.name} <span style="color:var(--red);font-weight:900">₹${i.price}</span></span>
+      <input type="checkbox" class="mover-edit-check" ${BIG_MOVERS.includes(i.name)?'checked':''} onchange="toggleMover('${i.name}',this)">
+    </div>`).join('')}
+  `;
+}
+function toggleMover(name,cb){
+  if(cb.checked){if(!BIG_MOVERS.includes(name))BIG_MOVERS.push(name);}
+  else{BIG_MOVERS=BIG_MOVERS.filter(x=>x!==name);}
+  localStorage.setItem('zorko_movers',JSON.stringify(BIG_MOVERS));
+  renderMovers();
+  toast(cb.checked?'✅ Added to Top Picks':'Removed from Top Picks');
+}
+function aTgl(t,el){
+  if(t==='orders'){
+    ordersOn=el.checked;
+    document.getElementById('pausedBanner').classList.toggle('show',!ordersOn);
+    saveOrders(); // save ordersOn state to cloud immediately
+    toast(el.checked?'✅ Orders enabled — saved to cloud':'⏸ Orders paused — saved to cloud');
+  }
+  else if(t==='combos'){const s=document.getElementById('combos');if(s)s.style.display=el.checked?'':'none';toast(el.checked?'Combos shown':'Combos hidden');}
+  else if(t==='deals'){const d=document.querySelector('.offers');if(d)d.style.display=el.checked?'':'none';toast(el.checked?'Deals shown':'Deals hidden');}
+  else toast(t+(el.checked?' enabled':' disabled'));
+}
+
+function renderCloudSettings(){
+  const box=document.getElementById('cloudSetupBox');
+  if(!box) return;
+  const alertsOn=(localStorage.getItem('zorko_alerts_on')==='1');
+  box.innerHTML=`
+  <div style="background:#f0fff4;border:2px solid var(--green);border-radius:14px;padding:16px;margin-top:1.5rem">
+    <p style="font-weight:900;font-size:14px;margin-bottom:4px;color:var(--green)">Cloud Sync Active (Supabase)</p>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600">Orders, images, and paused/open status sync across every device.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="syncNow()" style="background:var(--green);color:#fff;border:none;padding:9px 16px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;font-family:Outfit,sans-serif">Sync Now</button>
+      <button onclick="enableOrderAlerts()" style="background:${alertsOn?'#2563eb':'#111827'};color:#fff;border:none;padding:9px 16px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;font-family:Outfit,sans-serif">${alertsOn?'Alerts Enabled':'Enable Order Alerts'}</button>
+    </div>
+    <p style="margin-top:10px;font-size:11px;color:var(--muted);font-weight:600">Alerts work while owner portal is open on this device.</p>
+  </div>`;
+}
+
+async function syncNow(){
+  toast('Syncing...');
+  await loadOrders();
+  renderAmbience();
+  applyLogo();
+  applyHeroBg();
+  Object.keys(dishImages).forEach(id=>{
+    const el=document.getElementById('img_'+id);
+    if(el&&dishImages[id])el.innerHTML=`<img src="${dishImages[id]}" alt="" loading="lazy">`;
+  });
+  toast('Sync complete!');
+}
+// =================== SCROLL NAV ===================
+function scrollTo2(id,btn){
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');
+  const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// =================== INTERSECTION OBSERVER ===================
+let obs=null;
+
+function setupSectionObserver(){
+  try{if(obs) obs.disconnect();}catch(e){}
+  obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const secId=e.target.id;
+      const tabs=Array.from(document.querySelectorAll('.cat-tab'));
+      const tab=tabs.find(t=>(t.getAttribute('onclick')||'').includes(`'${secId}'`));
+      if(!tab) return;
+      tabs.forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  },{threshold:0.2,rootMargin:'-140px 0px 0px 0px'});
+
+  document.querySelectorAll('.section').forEach(el=>{
+    try{obs.observe(el);}catch(e){}
+  });
+}
+
+// =================== EVENTS ===================
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeCart();document.getElementById('checkoutModal').classList.remove('open');closeAdmin();}
+});
+document.getElementById('checkoutModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+
+// =================== INIT ===================
+(async()=>{
+// Render page immediately with local data — instant
+try{const s=localStorage.getItem('zorko_hidden_ids');if(s)hiddenIds=new Set(JSON.parse(s));}catch(e){}
+try{const s=localStorage.getItem('zorko_disabled_ids');if(s)disabledIds=new Set(JSON.parse(s));}catch(e){}
+try{const s=localStorage.getItem('zorko_custom_categories');if(s)customCategories=JSON.parse(s)||[];}catch(e){}
+try{const s=localStorage.getItem('zorko_custom_menu');if(s)customMenu=JSON.parse(s)||{};}catch(e){}
+try{const s=localStorage.getItem('zorko_price_overrides');if(s)priceOverrides=JSON.parse(s)||{};}catch(e){}
+try{const s=localStorage.getItem('zorko_item_overrides');if(s)itemOverrides=JSON.parse(s)||{};}catch(e){}
+applyPriceOverrides();
+applyItemOverrides();
+applyLogo();
+applyHeroBg();
+renderAll();
+renderAmbience();
+setupSectionObserver();
+// Load cloud data quietly in background — only update if new images found
+loadOrders().then(()=>{
+  // Only re-render ambience/menu images if cloud gave us new data
+  renderAmbience();
+  applyLogo();
+  applyHeroBg();
+  renderAll();
+  // Update dish image placeholders without full re-render
+  Object.keys(dishImages).forEach(id=>{
+    const el=document.getElementById('img_'+id);
+    if(el&&dishImages[id])el.innerHTML=`<img src="${dishImages[id]}" alt="" loading="lazy">`;
+  });
+
+  // Update availability opacity without a full re-render
+  const items=Object.values(MENU).flat().concat(Object.values(customMenu||{}).flat()).filter(i=>i&&i.id);
+  items.forEach(i=>{
+    const card=document.getElementById('card_'+i.id);
+    const mover=document.getElementById('mover_'+i.id);
+    const op=disabledIds.has(i.id)?'0.45':'1';
+    if(card)card.style.opacity=op;
+    if(mover)mover.style.opacity=op;
+  });
+  setupSectionObserver();
+}).catch(()=>{});
+})();
+</script>
+</body>
+</html>
